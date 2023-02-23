@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Application.UseCases.Expenses;
 using Domain.Entities;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
@@ -13,16 +9,17 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class ExpensesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IMediator _mediator;
 
-        public ExpensesController(AppDbContext context)
+        public ExpensesController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses()
         {
-            return await _context.Expenses.ToListAsync();
+            return await _mediator.Send(new List.Query());
         }
     }
 }
