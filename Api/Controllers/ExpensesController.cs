@@ -21,5 +21,11 @@ namespace Api.Controllers
         {
             return await _mediator.Send(new List.Query());
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Expense>> PostExpense(Expense expense)
+        {
+            return await _mediator.Send(new Create.Command { Expense = expense });
+        }
     }
 }

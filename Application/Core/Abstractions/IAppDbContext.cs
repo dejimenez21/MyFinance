@@ -7,5 +7,7 @@ namespace Application.Core.Abstractions
     public interface IAppDbContext
     {
         DbSet<Expense> Expenses { get; }
+
+        Task<int> CommitChanges();
     }
 }

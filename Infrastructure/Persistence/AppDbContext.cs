@@ -12,5 +12,10 @@ namespace Infrastructure
         {
             
         }
+
+        public async Task<int> CommitChanges()
+        {
+            return await SaveChangesAsync();
+        }
     }
 }
