@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Container, Menu } from "semantic-ui-react";
 import "./NavBar.css"
 
@@ -13,6 +14,8 @@ const NavBar = () => {
         <Container fluid className="bar">
           <Menu.Item
             name="home"
+            as={NavLink}
+            to='/'
             active={activeItem === "home"}
             onClick={handleItemClick}
           >
@@ -20,6 +23,8 @@ const NavBar = () => {
           </Menu.Item>
           <Menu.Item
             name="expenses"
+            as={NavLink}
+            to='/expenses'
             active={activeItem === "expenses"}
             onClick={handleItemClick}
           >
