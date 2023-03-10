@@ -7,7 +7,7 @@ const ExpensesDashboard = () => {
       <Grid>
         <GridRow>
           <GridColumn width="10">
-            <Container clearing><Button floated="right" color="teal" content="Add expense" /></Container>
+            <Container><Button floated="right" color="teal" content="Add expense" /></Container>
             
             <ExpensesList />
           </GridColumn>

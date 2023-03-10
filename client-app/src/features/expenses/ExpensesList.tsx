@@ -33,7 +33,7 @@ const ExpensesList = () => {
         agent.Expenses.list().then((response) => {
             setExpenses(response);
         })
-    });
+    }, []);
 
   return (
     <>

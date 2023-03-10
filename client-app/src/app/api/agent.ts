@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { Expense } from "../models/expense";
 
-axios.defaults.baseURL = "https://localhost:44348/api";
+// axios.defaults.baseURL = "https://localhost:44348/api";
+axios.defaults.baseURL = "http://localhost:5244/api";
 
 const getResponseData = <T>(response: AxiosResponse<T>) => response.data;
 
