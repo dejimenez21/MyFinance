@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Domain.Enums;
+using Domain.Entities;
+using Domain.Enums;
 
 namespace Infrastructure.Persistence
 {
@@ -6,18 +8,54 @@ namespace Infrastructure.Persistence
     {
         public static void SeedData(AppDbContext context)
         {
-            if (context.Expenses.Any()) return;
+            if (!context.Expenses.Any()) 
+                context.Expenses.AddRange(Expenses());
 
-            var expenses = new List<Expense>
+            if (!context.Accounts.Any())
             {
-                new Expense(500, "Supermercado"),
-                new Expense(300, "Otra cosa"),
-                new Expense(25000, "Acondicionador de Aire"),
-                new Expense(1250, "Balon de futbol")
+                var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, true, true);
+                context.Accounts.Add(cashAccount);
+            }
+
+            if (!context.CreditCards.Any()) 
+                context.CreditCards.AddRange(CreditCards());
+
+            if (!context.BankAccounts.Any())
+                context.BankAccounts.AddRange(BankAccounts());
+
+            if (!context.ChangeTracker.HasChanges()) return;
+
+            context.SaveChanges();
+        }
+
+        private static List<Expense> Expenses()
+        {
+            return new List<Expense>()
+            {
+                new(500, "Supermercado"),
+                new(300, "Otra cosa"),
+                new(25000, "Acondicionador de Aire"),
+                new(1250, "Balon de futbol")
             };
 
-            context.Expenses.AddRange(expenses);
-            context.SaveChanges();
+        }
+
+        private static List<CreditCard> CreditCards()
+        {
+            return new List<CreditCard>
+            {
+                new("Infinia Popular", BankCode.BPD, "8040152044645397", PaymentNetwork.VISA),
+                new("Bravo Banreservas", BankCode.BRD, "9601452487456436", PaymentNetwork.MasterCard),
+            };
+        }
+
+        private static List<BankAccount> BankAccounts()
+        {
+            return new List<BankAccount>
+            {
+                new("Ahorros Popular", "804015204", BankCode.BPD),
+                new("Corriente Banreservas", "960145248", BankCode.BRD)
+            };
         }
     }
 }

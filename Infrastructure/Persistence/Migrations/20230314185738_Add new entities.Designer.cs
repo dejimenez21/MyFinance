@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230314185738_Add new entities")]
+    partial class Addnewentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -27,12 +30,6 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsCash")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsElegibleForPayment")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -44,15 +41,12 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("OpenedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
-
-                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Entities.Expense", b =>
@@ -76,35 +70,65 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Expenses");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PaymentOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("PaymentOptions");
+
+                    b.UseTptMappingStrategy();
+                });
+
             modelBuilder.Entity("Domain.Entities.BankAccount", b =>
                 {
-                    b.HasBaseType("Domain.Entities.Account");
+                    b.HasBaseType("Domain.Entities.PaymentOption");
 
-                    b.Property<string>("Bank")
+                    b.Property<int>("Bank")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CardNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Network")
+                        .HasColumnType("INTEGER");
 
                     b.ToTable("BankAccounts");
                 });
 
             modelBuilder.Entity("Domain.Entities.CreditCard", b =>
                 {
-                    b.HasBaseType("Domain.Entities.Account");
-
-                    b.Property<string>("Bank")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Network")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.HasBaseType("Domain.Entities.PaymentOption");
 
                     b.ToTable("CreditCards");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PaymentOption", b =>
+                {
+                    b.HasOne("Domain.Entities.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("Domain.Entities.BankAccount", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", null)
+                    b.HasOne("Domain.Entities.PaymentOption", null)
                         .WithOne()
                         .HasForeignKey("Domain.Entities.BankAccount", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -113,7 +137,7 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.CreditCard", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", null)
+                    b.HasOne("Domain.Entities.PaymentOption", null)
                         .WithOne()
                         .HasForeignKey("Domain.Entities.CreditCard", "Id")
                         .OnDelete(DeleteBehavior.Cascade)

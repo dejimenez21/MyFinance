@@ -17,7 +17,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses()
+        public async Task<ActionResult<List<Expense>>> GetExpenses()
         {
             return await _mediator.Send(new List.Query());
         }

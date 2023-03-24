@@ -3,6 +3,7 @@ export default interface Liquidity {
   number: string;
   balance: number;
   bankCode: string | null;
+  network: string;
   alias: string;
   group: string;
   //lastTransactionDate: string;

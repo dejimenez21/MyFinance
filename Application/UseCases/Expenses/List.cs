@@ -1,5 +1,4 @@
-﻿
-using Application.Core.Abstractions;
+﻿using Domain.Abstractions;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +11,16 @@ namespace Application.UseCases.Expenses
 
         public class Handler : IRequestHandler<Query, List<Expense>>
         {
-            private readonly IAppDbContext _context;
+            private readonly IExpensesRepository _expensesRepository;
 
-            public Handler(IAppDbContext context)
+            public Handler(IExpensesRepository expensesRepository)
             {
-                _context = context;
+                _expensesRepository = expensesRepository;
             }
 
             public async Task<List<Expense>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Expenses.ToListAsync();
+                return await _expensesRepository.GetAllAsync();
             }
         }
     }

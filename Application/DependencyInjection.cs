@@ -8,6 +8,8 @@ namespace Infrastructure
         {
             services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Application.UseCases.Expenses.List).Assembly));
 
+            services.AddAutoMapper(typeof(Application.Dtos.LiquidAccountDto).Assembly);
+
             return services;
         }
     }

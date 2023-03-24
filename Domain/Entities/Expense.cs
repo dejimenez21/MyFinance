@@ -5,18 +5,22 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Expense
+    public class Expense : Entity
     {
-        public Guid Id { get; set; }
-        public decimal Amount { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public decimal Amount { get; private set; }
+        public string Description { get; private set; }
+        public DateTime Date { get; private set; }
 
         public Expense(decimal amount, string description)
         {
             this.Amount = amount;
             this.Description = description;
             this.Id = Guid.NewGuid();
+        }
+
+        private Expense()
+        {
+            
         }
     }
 }
