@@ -1,18 +1,23 @@
-import { Card, Grid, Header, Image } from "semantic-ui-react";
+import { Card, Container, Grid, Header, Image } from "semantic-ui-react";
+import Liquidity from "../../app/models/liquidity";
+import "./LiquidityDashboard.css";
 
-const LiquidityItem = () => {
+interface Props {
+  account: Liquidity;
+}
+
+const LiquidityItem = ({account}: Props) => {
   return (
-    <>
       <Card.Group>
-        <Card>
+        <Card className="liquidity-item">
           <Card.Content>
             <Image
-              src="./assets/bankImages/bpd.jpg"
+              src={`./assets/bankImages/${account.bankCode ? account.bankCode : "cash"}.jpg`}
               size="mini"
               floated="right"
             />
-            <Card.Header>Cuenta de Ahorros Popular</Card.Header>
-            <Card.Description>804015204</Card.Description>
+            <Card.Header>{account.alias}</Card.Header>
+            <Card.Description>{account.number}</Card.Description>
             <Card.Meta>Last Transaction Date: 2023-03-05</Card.Meta>
           </Card.Content>
           <Card.Content textAlign="right">
@@ -22,14 +27,13 @@ const LiquidityItem = () => {
                   <Header>Balance</Header>
                 </Grid.Column>
                 <Grid.Column width="10" textAlign="right">
-                  <Header color="green">RD$12,500.00</Header>
+                  <Header color="green">RD${account.balance}</Header>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
           </Card.Content>
         </Card>
       </Card.Group>
-    </>
   );
 };
 

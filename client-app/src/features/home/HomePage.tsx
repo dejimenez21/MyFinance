@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { Card, Grid, Header, Image } from "semantic-ui-react";
-import LiquidityItem from "./LiquidityItem";
+import LiquidityDashboard from "../liquidity/LiquidityDashboard";
 
 const HomePage = () => {
 
   return (
     <>
-      <Header>Cash</Header>
-      <LiquidityItem/>     
+      <LiquidityDashboard />
     </>
   );
 };

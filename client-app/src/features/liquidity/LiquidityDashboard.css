@@ -1,0 +1,13 @@
+.liquidity-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.liquidity-item {
+    width: 100% !important;
+}
+
+.liquidity-item:hover {
+    cursor: pointer;
+}
