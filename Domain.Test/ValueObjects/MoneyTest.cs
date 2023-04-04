@@ -14,10 +14,10 @@ public class MoneyTests
         var money2 = new Money(20m, CurrencyCode.USD);
 
         // Act
-        var result = money1.Add(money2);
+        var result = money1 + money2;
 
         // Assert
-        result.Amount.Should().Be(30m);
+        result.Value.Should().Be(30m);
         result.Currency.Should().Be(CurrencyCode.USD);
     }
 
@@ -28,11 +28,8 @@ public class MoneyTests
         var money1 = new Money(10m, CurrencyCode.USD);
         var money2 = new Money(20m, CurrencyCode.DOP);
 
-        // Act
-        void Action() => money1.Add(money2);
-
         // Assert
-        Assert.Throws<InvalidOperationException>((Action)Action);
+        Assert.Throws<InvalidOperationException>(() => money1 + money2);
     }
 
     [Fact]
@@ -43,10 +40,10 @@ public class MoneyTests
         var money2 = new Money(20m, CurrencyCode.USD);
 
         // Act
-        var result = money1.Subtract(money2);
+        var result = money1 - money2;
 
         // Assert
-        result.Amount.Should().Be(10m);
+        result.Value.Should().Be(10m);
         result.Currency.Should().Be(CurrencyCode.USD);
     }
 
@@ -57,11 +54,8 @@ public class MoneyTests
         var money1 = new Money(30m, CurrencyCode.USD);
         var money2 = new Money(20m, CurrencyCode.DOP);
 
-        // Act
-        void Action() => money1.Subtract(money2);
-
         // Assert
-        Assert.Throws<InvalidOperationException>((Action)Action);
+        Assert.Throws<InvalidOperationException>(() => money1 + money2);
     }
 
     [Fact]

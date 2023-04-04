@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230403172946_AccountMovements")]
+    partial class AccountMovements
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -43,9 +46,6 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("OpenedDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<decimal>("OpeningBalance")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -129,13 +129,12 @@ namespace Infrastructure.Persistence.Migrations
                             b1.Property<Guid>("AccountMovementId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasColumnType("TEXT")
+                            b1.Property<int>("Currency")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasColumnType("decimal(18, 2)")
+                                .HasColumnType("TEXT")
                                 .HasColumnName("Amount");
 
                             b1.HasKey("AccountMovementId");

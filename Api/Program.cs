@@ -1,4 +1,5 @@
 using Api.Extensions;
+using Domain.Services.AccountBalance;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,10 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.Wi
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+#region DomainServices
+builder.Services.AddTransient<IAccountBalanceService, AccountBalanceCalculator>();
+#endregion
 
 var app = builder.Build();
 

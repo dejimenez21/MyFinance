@@ -1,5 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
+using Infrastructure.Persistence.Repositories.Shared;
 
 namespace Infrastructure.Persistence.Repositories
 {

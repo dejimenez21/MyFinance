@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence
 
             if (!context.Accounts.Any())
             {
-                var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, true, true);
+                var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, 1245, true, true);
                 context.Accounts.Add(cashAccount);
             }
 

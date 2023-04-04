@@ -9,6 +9,7 @@ namespace Infrastructure
         public DbSet<Account> Accounts { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<AccountMovement> AccountMovements { get; set; }
 
         public AppDbContext(DbContextOptions options) : base(options)
         {

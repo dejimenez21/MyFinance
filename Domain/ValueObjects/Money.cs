@@ -4,33 +4,35 @@ namespace Domain.ValueObjects
 {
     public class Money : IEquatable<Money>
     {
-        public decimal Amount { get; }
+        public decimal Value { get; }
         public CurrencyCode Currency { get; }
+
+        private Money() { }
 
         public Money(decimal amount, CurrencyCode currency)
         {
-            Amount = amount;
+            Value = amount;
             Currency = currency;
         }
 
-        public Money Add(Money other)
+        public static Money operator +(Money left, Money right)
         {
-            if (Currency != other.Currency)
+            if (left.Currency != right.Currency)
             {
-                throw new InvalidOperationException("Cannot add amounts with different currencies");
+                throw new InvalidOperationException("Cannot add Money objects with different currencies.");
             }
 
-            return new Money(Amount + other.Amount, Currency);
+            return new Money(left.Value + right.Value, left.Currency);
         }
 
-        public Money Subtract(Money other)
+        public static Money operator -(Money left, Money right)
         {
-            if (Currency != other.Currency)
+            if (left.Currency != right.Currency)
             {
-                throw new InvalidOperationException("Cannot subtract amounts with different currencies");
+                throw new InvalidOperationException("Cannot subtract Money objects with different currencies.");
             }
 
-            return new Money(Amount - other.Amount, Currency);
+            return new Money(left.Value - right.Value, left.Currency);
         }
 
         public override bool Equals(object obj)
@@ -45,7 +47,7 @@ namespace Domain.ValueObjects
                 return false;
             }
 
-            return Amount == other.Amount && Currency == other.Currency;
+            return Value == other.Value && Currency == other.Currency;
         }
 
         public override int GetHashCode()
@@ -53,7 +55,7 @@ namespace Domain.ValueObjects
             unchecked
             {
                 int hash = 17;
-                hash = (hash * 23) + Amount.GetHashCode();
+                hash = (hash * 23) + Value.GetHashCode();
                 hash = (hash * 23) + Currency.GetHashCode();
                 return hash;
             }

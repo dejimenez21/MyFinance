@@ -1,6 +1,7 @@
 ﻿using Application.Domain.Enums;
 using Domain.Abstractions;
 using Domain.Entities;
+using Infrastructure.Persistence.Repositories.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories

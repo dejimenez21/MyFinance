@@ -12,6 +12,8 @@ namespace Infrastructure.Persistence.Configuration
         {
             builder.UseTptMappingStrategy();
 
+            builder.Property(a => a.OpeningBalance).HasColumnType("decimal(18,2)");
+
             builder.Property(a => a.Type)
                 .HasConversion(type => type.ToString(), value => Enum.Parse<AccountType>(value));
 
