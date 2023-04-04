@@ -36,9 +36,9 @@ const LiquidityDashboard = () => {
         <Fragment key={group}>
           <Header as="h2" style={{marginBottom: "1em"}}>{group}</Header>
           <Container style={{ marginBottom: "5em"}}>
-            <Grid>
+            <Grid columns={3}>
               {accounts.map((account) => (
-                <Grid.Column key={account.id} width={5}>
+                <Grid.Column key={account.id}>
                   <LiquidityItem account={account} />
                 </Grid.Column>
               ))}
