@@ -1,20 +1,55 @@
-import { Button, Container, Grid, GridColumn, GridRow } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Grid,
+  GridColumn,
+  GridRow,
+} from "semantic-ui-react";
 import ExpensesList from "./ExpensesList";
+import ExpenseForm from "./ExpenseForm";
+import { useEffect, useState } from "react";
+import { Expense } from "../../app/models/expense";
+import agent from "../../app/api/agent";
 
 const ExpensesDashboard = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleSubmit = (expense: Expense) => {
+    setExpenses([expense, ...expenses]);
+    setModalOpen(false);
+  }
+
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+
+  useEffect(() => {
+    agent.Expenses.list().then((response) => {
+      setExpenses(response);
+    });
+  }, []);
+
   return (
     <>
-      <Grid>
-        <GridRow>
-          <GridColumn width="10">
-            <Container><Button floated="right" color="teal" content="Add expense" /></Container>
-            
-            <ExpensesList />
+      <Grid columns={1} centered verticalAlign="middle">
+          <GridColumn>
+            <Container style={{ marginBottom: "5em" }}>
+              <Button
+                floated="right"
+                color="teal"
+                content="Add expense"
+                onClick={handleOpen}
+              />
+            </Container>
+            <ExpensesList expenses={expenses} />
           </GridColumn>
-          <GridColumn width="6">
-
-          </GridColumn>
-        </GridRow>
+          <ExpenseForm modalOpen={modalOpen} handleClose={handleClose} handleSubmit={handleSubmit} />
       </Grid>
     </>
   );
