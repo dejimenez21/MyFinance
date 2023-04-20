@@ -10,6 +10,8 @@ import ExpenseForm from "./ExpenseForm";
 import { useEffect, useState } from "react";
 import { Expense } from "../../app/models/expense";
 import agent from "../../app/api/agent";
+import { error } from "console";
+import { AxiosError } from "axios";
 
 const ExpensesDashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -23,8 +25,13 @@ const ExpensesDashboard = () => {
   };
 
   const handleSubmit = (expense: Expense) => {
-    setExpenses([expense, ...expenses]);
-    setModalOpen(false);
+    agent.Expenses.post(expense).then((response) => {
+      setExpenses([response, ...expenses]);
+      setModalOpen(false);
+    }).catch((error: AxiosError) => {
+      console.log(error);
+    })
+    
   }
 
   const [expenses, setExpenses] = useState<Expense[]>([]);
