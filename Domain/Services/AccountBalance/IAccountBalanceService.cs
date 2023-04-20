@@ -1,6 +1,6 @@
-﻿using Domain.ValueObjects;
+﻿using SharedKernel.Domain.ValueObjects;
 
-namespace Domain.Services.AccountBalance
+namespace SharedKernel.Domain.Services.AccountBalance
 {
     public interface IAccountBalanceService
     {

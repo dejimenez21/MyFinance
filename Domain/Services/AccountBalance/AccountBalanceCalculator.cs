@@ -1,5 +1,6 @@
 ﻿using Domain.Abstractions;
-using Domain.ValueObjects;
+using SharedKernel.Domain.Services.AccountBalance;
+using SharedKernel.Domain.ValueObjects;
 
 namespace Domain.Services.AccountBalance
 {

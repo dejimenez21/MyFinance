@@ -1,6 +1,6 @@
-﻿using Domain.Enums;
-using Domain.ValueObjects;
-using FluentAssertions;
+﻿using FluentAssertions;
+using SharedKernel.Domain.Enums;
+using SharedKernel.Domain.ValueObjects;
 
 namespace Domain.Test.ValueObjects;
 

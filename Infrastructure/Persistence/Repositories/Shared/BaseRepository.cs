@@ -1,5 +1,5 @@
-﻿using Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SharedKernel.Domain.Abstractions;
 using SharedKernel.Domain.Primitives;
 
 namespace Infrastructure.Persistence.Repositories.Shared

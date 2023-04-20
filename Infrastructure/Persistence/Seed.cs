@@ -1,6 +1,7 @@
 ﻿using Application.Domain.Enums;
 using Domain.Entities;
 using Domain.Enums;
+using SharedKernel.Domain.Enums;
 
 namespace Infrastructure.Persistence
 {

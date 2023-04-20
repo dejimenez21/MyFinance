@@ -1,5 +1,5 @@
 ﻿using Application.Domain.Enums;
-using Domain.Enums;
+using SharedKernel.Domain.Enums;
 using SharedKernel.Domain.Primitives;
 
 namespace Domain.Entities
@@ -19,14 +19,13 @@ namespace Domain.Entities
 
         protected Account() { }
 
-        public Account(string name, AccountType type, string number, CurrencyCode currency, DateTime openedDate, decimal openingBalance, bool isCash = false, bool isElegibleForPayment = false)
+        public Account(string name, AccountType type, string number, CurrencyCode currency, DateTime openedDate, decimal openingBalance, bool isCash = false, bool isElegibleForPayment = false) : base()
         {
             if (OpenedDate > DateTime.Now) throw new Exception("Error creating account. OpenedDate can't be in the future.");
             if (OpeningBalance < 0) throw new Exception("Error creating account. OpeningBalance can't be negative.");
             if (isCash && type != AccountType.Asset) throw new Exception("Error creating account. Account cannot be marked as cash if is not of type asset.");
             if (IsElegibleForPayment && (type == AccountType.Expense || type == AccountType.Income)) throw new Exception("Income and Expenses accounts cannot be mark as payment eligible.");
 
-            Id = Guid.NewGuid();
             Name = name;
             Type = type;
             Number = number;

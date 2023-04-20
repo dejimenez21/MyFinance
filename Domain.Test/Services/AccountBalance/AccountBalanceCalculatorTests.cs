@@ -1,10 +1,10 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
-using Domain.Enums;
 using Domain.Services.AccountBalance;
-using Domain.ValueObjects;
 using FluentAssertions;
 using Moq;
+using SharedKernel.Domain.Enums;
+using SharedKernel.Domain.ValueObjects;
 
 namespace Tests.Domain.Services.AccountBalance
 {
