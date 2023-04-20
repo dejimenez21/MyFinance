@@ -1,3 +1,5 @@
+using SharedKernel.Domain.Primitives;
+
 namespace Domain.Entities
 {
     public class Expense : Entity

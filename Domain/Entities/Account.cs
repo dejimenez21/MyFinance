@@ -1,5 +1,6 @@
 ﻿using Application.Domain.Enums;
 using Domain.Enums;
+using SharedKernel.Domain.Primitives;
 
 namespace Domain.Entities
 {

@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using Domain.Entities;
+using SharedKernel.Domain.Primitives;
 
 namespace Infrastructure.Persistence.Repositories.Shared
 {
