@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.Repositories
 {
     public class AccountsRepository : CommandsRepository<Account>, IAccountRepository
     {
-        public AccountsRepository(AppDbContext context) : base(context)
+        public AccountsRepository(TransactionsDbContext context) : base(context)
         {
         }
 

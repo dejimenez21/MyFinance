@@ -7,10 +7,10 @@ namespace Infrastructure.Persistence
 {
     public static class Seed
     {
-        public static void SeedData(AppDbContext context)
+        public static void SeedData(TransactionsDbContext context)
         {
-            if (!context.Expenses.Any()) 
-                context.Expenses.AddRange(Expenses());
+            //if (!context.Expenses.Any()) 
+            //    context.Expenses.AddRange(Expenses());
 
             if (!context.Accounts.Any())
             {
@@ -29,17 +29,17 @@ namespace Infrastructure.Persistence
             context.SaveChanges();
         }
 
-        private static List<Expense> Expenses()
-        {
-            return new List<Expense>()
-            {
-                new(500, "Supermercado"),
-                new(300, "Otra cosa"),
-                new(25000, "Acondicionador de Aire"),
-                new(1250, "Balon de futbol")
-            };
+        //private static List<Expense> Expenses()
+        //{
+        //    return new List<Expense>()
+        //    {
+        //        new(500, "Supermercado"),
+        //        new(300, "Otra cosa"),
+        //        new(25000, "Acondicionador de Aire"),
+        //        new(1250, "Balon de futbol")
+        //    };
 
-        }
+        //}
 
         private static List<CreditCard> CreditCards()
         {

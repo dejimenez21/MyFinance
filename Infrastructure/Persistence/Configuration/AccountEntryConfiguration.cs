@@ -5,9 +5,9 @@ using SharedKernel.Domain.Enums;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    internal class AccountMovementConfiguration : IEntityTypeConfiguration<AccountMovement>
+    internal class AccountEntryConfiguration : IEntityTypeConfiguration<AccountEntry>
     {
-        public void Configure(EntityTypeBuilder<AccountMovement> builder)
+        public void Configure(EntityTypeBuilder<AccountEntry> builder)
         {
             builder.OwnsOne(am => am.Amount, money =>
             {

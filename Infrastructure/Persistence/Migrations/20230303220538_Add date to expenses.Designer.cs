@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(TransactionsDbContext))]
     [Migration("20230303220538_Add date to expenses")]
     partial class Adddatetoexpenses
     {

@@ -1,6 +1,7 @@
 using Api.Extensions;
 using Domain.Services.AccountBalance;
 using Infrastructure;
+using Expenses.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader()));
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddTransactionsInfrastructure(builder.Configuration);
+builder.Services.AddExpensesInfrastructure(builder.Configuration);
 
 #region DomainServices
 builder.Services.AddTransient<IAccountBalanceService, AccountBalanceCalculator>();

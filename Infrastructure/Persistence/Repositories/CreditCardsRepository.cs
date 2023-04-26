@@ -6,7 +6,7 @@ namespace Infrastructure.Persistence.Repositories
 {
     public class CreditCardsRepository : CommandsRepository<BankAccount>, ICreditCardsRepository
     {
-        public CreditCardsRepository(AppDbContext context) : base(context)
+        public CreditCardsRepository(TransactionsDbContext context) : base(context)
         {
         }
     }

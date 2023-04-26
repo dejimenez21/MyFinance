@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class AccountMovementsRepository : BaseRepository<AccountMovement>, IAccountMovementsRepository
+    public class AccountMovementsRepository : BaseRepository<AccountEntry>, IAccountMovementsRepository
     {
-        public AccountMovementsRepository(AppDbContext context) : base(context)
+        public AccountMovementsRepository(TransactionsDbContext context) : base(context)
         {
             
         }
 
-        public async Task<IEnumerable<AccountMovement>> GetMovementsByAccountId(Guid accountId)
+        public async Task<IEnumerable<AccountEntry>> GetMovementsByAccountId(Guid accountId)
         {
             return await _context.AccountMovements.Where(m => m.AccountId == accountId).AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<AccountMovement>> GetMovementsByMultipleAccountIds(IEnumerable<Guid> accountIds)
+        public async Task<IEnumerable<AccountEntry>> GetMovementsByMultipleAccountIds(IEnumerable<Guid> accountIds)
         {
             return await _context.AccountMovements.Where(m => accountIds.Contains(m.AccountId)).AsNoTracking().ToListAsync();
         }

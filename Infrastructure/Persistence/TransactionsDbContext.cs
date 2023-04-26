@@ -3,15 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class AppDbContext : DbContext
+    public class TransactionsDbContext : DbContext
     {
-        public DbSet<Expense> Expenses { get; private set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
-        public DbSet<AccountMovement> AccountMovements { get; set; }
+        public DbSet<AccountEntry> AccountMovements { get; set; }
 
-        public AppDbContext(DbContextOptions options) : base(options)
+        public TransactionsDbContext(DbContextOptions options) : base(options)
         {
             
         }
@@ -20,7 +19,8 @@ namespace Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            modelBuilder.HasDefaultSchema("TRNX");
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(TransactionsDbContext).Assembly);
         }
 
         public async Task<int> CommitChanges()

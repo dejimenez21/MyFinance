@@ -1,10 +1,10 @@
-﻿using SharedKernel.Domain.ValueObjects;
+﻿using Domain.Entities;
+using SharedKernel.Domain.ValueObjects;
 
-namespace SharedKernel.Domain.Services.AccountBalance
+namespace Domain.Services.AccountBalance;
+
+public interface IAccountBalanceService
 {
-    public interface IAccountBalanceService
-    {
-        Task<Money> GetAccountBalance(Guid accountId);
-        Task<Dictionary<Guid, Money>> GetAccountsBalances(IEnumerable<Guid> accountIds);
-    }
+    Task<Money> GetAccountBalance(Guid accountId);
+    Task<Dictionary<Account, Money>> GetAccountsBalances(IEnumerable<Guid> accountIds);
 }

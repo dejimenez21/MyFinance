@@ -12,7 +12,7 @@ namespace Api.Extensions
 
             try
             {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var context = scope.ServiceProvider.GetRequiredService<TransactionsDbContext>();
                 context.Database.Migrate();
                 Seed.SeedData(context);
             }
