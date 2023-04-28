@@ -2,6 +2,7 @@ using Api.Extensions;
 using Domain.Services.AccountBalance;
 using Infrastructure;
 using Expenses.Infrastructure;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,11 +1,11 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
-using Infrastructure.Persistence.Repositories.Shared;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Persistence;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class AccountMovementsRepository : BaseRepository<AccountEntry>, IAccountMovementsRepository
+    public class AccountMovementsRepository : ReadOnlyRepository<TransactionsDbContext, AccountEntry>, IAccountMovementsRepository
     {
         public AccountMovementsRepository(TransactionsDbContext context) : base(context)
         {

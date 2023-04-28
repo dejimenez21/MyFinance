@@ -23,7 +23,10 @@ namespace Application.MappingProfiles
                     config => config.MapFrom(a => a.Name))
                 .ForMember(
                     l => l.Group,
-                    config => config.MapFrom(a => a.IsCash ? LiquidityGroup.CASH : LiquidityGroup.OTHER));
+                    config => config.MapFrom(a => a.IsCash ? LiquidityGroup.CASH : LiquidityGroup.OTHER))
+                .ForMember(
+                    l => l.Balance,
+                    config => config.MapFrom(a => a.GetBalance()));
                 
 
             CreateMap<CreditCard, LiquidAccountDto>()

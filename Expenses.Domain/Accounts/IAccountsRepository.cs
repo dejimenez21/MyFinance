@@ -2,7 +2,7 @@
 
 namespace Expenses.Domain.Accounts
 {
-    public interface IAccountsRepository : IRepository<Account>
+    public interface IAccountsRepository : IReadOnlyRepository<PaymentAccount>
     {
     }
 }

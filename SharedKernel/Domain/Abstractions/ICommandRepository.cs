@@ -2,7 +2,8 @@
 
 namespace SharedKernel.Domain.Abstractions;
 
-public interface ICommandRepository<T> where T : Entity
+public interface ICommandRepository<T> : IReadOnlyRepository<T> 
+    where T : AggregateRoot
 {
     void Insert(T entity);
     void Update(T entity);

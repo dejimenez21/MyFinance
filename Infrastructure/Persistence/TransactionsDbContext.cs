@@ -10,7 +10,7 @@ namespace Infrastructure
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<AccountEntry> AccountMovements { get; set; }
 
-        public TransactionsDbContext(DbContextOptions options) : base(options)
+        public TransactionsDbContext(DbContextOptions<TransactionsDbContext> options) : base(options)
         {
             
         }

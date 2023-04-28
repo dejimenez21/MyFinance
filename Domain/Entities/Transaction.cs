@@ -5,7 +5,7 @@ using SharedKernel.Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public class Transaction : Entity
+    public class Transaction : AggregateRoot
     {
         private Transaction(string description, DateTimeOffset transactionDate)
         {
@@ -30,6 +30,7 @@ namespace Domain.Entities
 
             foreach (var accountOperation in accountOperations)
             {
+                //TODO: If exception is thrown revert changes made to domain model.
                 var account = accountOperation.Key;
                 var amount = accountOperation.Value;
                 account.RegisterAccountMovement(transaction.Id, amount);

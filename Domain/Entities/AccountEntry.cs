@@ -1,5 +1,4 @@
-﻿using Domain.Enums;
-using SharedKernel.Domain.Primitives;
+﻿using SharedKernel.Domain.Primitives;
 using SharedKernel.Domain.ValueObjects;
 
 namespace Domain.Entities

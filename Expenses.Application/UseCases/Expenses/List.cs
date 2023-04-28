@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using Expenses.Domain.Expenses;
+using Expenses.Domain.ExpenseGroups;
 using MediatR;
 
 namespace Expenses.Application.UseCases.Expenses;

@@ -4,13 +4,13 @@ using SharedKernel.Domain.Primitives;
 
 namespace SharedKernel.Persistence
 {
-    public abstract class BaseRepository<TContext, TEntity> : IRepository<TEntity> 
+    public abstract class ReadOnlyRepository<TContext, TEntity> : IReadOnlyRepository<TEntity> 
         where TContext : DbContext
         where TEntity : Entity 
     {
         protected readonly TContext _context;
 
-        public BaseRepository(TContext context)
+        public ReadOnlyRepository(TContext context)
         {
             _context = context;
         }
@@ -18,7 +18,8 @@ namespace SharedKernel.Persistence
         public async Task<List<TEntity>> GetAllAsync() => await _context.Set<TEntity>().AsNoTracking().ToListAsync();
 
 #pragma warning disable CS8603 // Possible null reference return.
-        public async Task<TEntity> GetByIdAsync(Guid id) => await _context.Set<TEntity>().FindAsync(id);
+        public async virtual Task<TEntity> GetByIdAsync(Guid id) => 
+            await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
         public async Task<List<TEntity>> GetByIdsAsync(Guid[] ids) => await _context.Set<TEntity>().AsNoTracking().Where(t => ids.Contains(t.Id)).ToListAsync();
 #pragma warning restore CS8603 // Possible null reference return.

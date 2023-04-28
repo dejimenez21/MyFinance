@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Abstractions
 {
-    public interface IBankAccountsRepository : ICommandRepository<CreditCard>, IRepository<CreditCard>
+    public interface IBankAccountsRepository : ICommandRepository<CreditCard>, IReadOnlyRepository<CreditCard>
     {
 
     }

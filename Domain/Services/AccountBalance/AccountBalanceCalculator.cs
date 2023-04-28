@@ -8,9 +8,9 @@ namespace Domain.Services.AccountBalance
     public class AccountBalanceCalculator : IAccountBalanceService
     {
         private readonly IAccountMovementsRepository _movementsRepository;
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountsRepository _accountRepository;
 
-        public AccountBalanceCalculator(IAccountMovementsRepository movementsRepository, IAccountRepository accountRepository)
+        public AccountBalanceCalculator(IAccountMovementsRepository movementsRepository, IAccountsRepository accountRepository)
         {
             _movementsRepository = movementsRepository;
             _accountRepository = accountRepository;

@@ -13,9 +13,9 @@ public record AccountId
     protected AccountId() { }
 }
 
-public class Account : Entity
+public class Account : AggregateRoot
 {
-    private HashSet<AccountEntry> _accountMovements;
+    private HashSet<AccountEntry> _accountEntries;
 
     //TODO: Set caching mechanism for calculating balances based on transactions
     public string Name { get; protected set; }
@@ -26,8 +26,7 @@ public class Account : Entity
     public decimal OpeningBalance { get; private set; }
     public bool IsCash { get; protected set; }
     public bool IsElegibleForPayment { get; protected set; }
-    public IReadOnlyCollection<AccountEntry> AccountEntries => _accountMovements;
-
+    public IReadOnlyCollection<AccountEntry> AccountEntries => _accountEntries;
 
     protected Account() { }
 
@@ -47,7 +46,7 @@ public class Account : Entity
         OpeningBalance = openingBalance;
         IsCash = isCash;
         IsElegibleForPayment = isElegibleForPayment;
-        _accountMovements = new HashSet<AccountEntry>();
+        _accountEntries = new HashSet<AccountEntry>();
     }
 
     internal void RegisterAccountMovement(Guid transactionId, Money amount)
@@ -57,6 +56,18 @@ public class Account : Entity
 
         if (amount.Currency != Currency) throw new InvalidOperationException("The entry currency cannot be different from the account currency");
 
-        _accountMovements.Add(new AccountEntry(Id, transactionId, amount));
+        _accountEntries.Add(new AccountEntry(Id, transactionId, amount));
     }
+
+    public Money GetBalance()
+    {
+        var balance = _accountEntries
+            .Select(x => x.Amount)
+            .Aggregate((prev, actual) => prev + actual);
+
+        balance += new Money(OpeningBalance, Currency);
+
+        return balance;
+    }
+
 }

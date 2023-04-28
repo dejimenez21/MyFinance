@@ -3,8 +3,9 @@ using SharedKernel.Domain.Abstractions;
 
 namespace Domain.Abstractions
 {
-    public interface IAccountRepository : ICommandRepository<Account>, IRepository<Account>
+    public interface IAccountsRepository : ICommandRepository<Account>, IReadOnlyRepository<Account>
     {
         Task<List<Account>> GetCashAccounts();
+        Task<Account> GetAcccountByName(string name);
     }
 }

@@ -4,9 +4,9 @@ using SharedKernel.Domain.Primitives;
 
 namespace SharedKernel.Persistence
 {
-    public abstract class CommandsRepository<TContext, TEntity> : BaseRepository<TContext, TEntity>, ICommandRepository<TEntity> 
+    public abstract class CommandsRepository<TContext, TEntity> : ReadOnlyRepository<TContext, TEntity>, ICommandRepository<TEntity>, IReadOnlyRepository<TEntity> 
         where TContext : DbContext
-        where TEntity : Entity
+        where TEntity : AggregateRoot
     {
         public CommandsRepository(TContext context) : base(context) { }
 
@@ -29,5 +29,10 @@ namespace SharedKernel.Persistence
         {
             _context.Update(entity);
         }
+
+#pragma warning disable CS8603 // Possible null reference return.
+        public override async Task<TEntity> GetByIdAsync(Guid id)
+            => await _context.Set<TEntity>().FindAsync(id);
+#pragma warning restore CS8603 // Possible null reference return.
     }
 }

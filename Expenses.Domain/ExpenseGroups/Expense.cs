@@ -1,8 +1,8 @@
+using Expenses.Domain.Expenses;
 using SharedKernel.Domain.Primitives;
 using SharedKernel.Domain.ValueObjects;
-using System.Transactions;
 
-namespace Expenses.Domain.Expenses;
+namespace Expenses.Domain.ExpenseGroups;
 
 public class Expense : Entity
 {
@@ -21,6 +21,7 @@ public class Expense : Entity
 
     public Expense(Money amount, string description, DateTime date, ExpenseCategory category, Guid accountId, Guid transactionId, Guid? groupId)
     {
+        Id = Guid.NewGuid();
         Amount = amount;
         Description = description;
         Date = date;

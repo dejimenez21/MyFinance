@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Expenses.Infrastructure.Persistence.Configuration
 {
-    public class AccountConfiguration : IEntityTypeConfiguration<Account>
+    public class AccountConfiguration : IEntityTypeConfiguration<PaymentAccount>
     {
-        public void Configure(EntityTypeBuilder<Account> builder)
+        public void Configure(EntityTypeBuilder<PaymentAccount> builder)
         {
         }
     }

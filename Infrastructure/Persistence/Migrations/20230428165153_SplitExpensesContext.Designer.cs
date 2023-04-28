@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,12 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(TransactionsDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230428165153_SplitExpensesContext")]
+    partial class SplitExpensesContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
+            modelBuilder
+                .HasDefaultSchema("TRNX")
+                .HasAnnotation("ProductVersion", "7.0.5");
 
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
@@ -53,12 +58,15 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts");
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Accounts", "TRNX");
 
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("Domain.Entities.AccountMovement", b =>
+            modelBuilder.Entity("Domain.Entities.AccountEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,28 +80,27 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountMovements");
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("AccountMovements", "TRNX");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Expense", b =>
+            modelBuilder.Entity("Domain.Entities.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTimeOffset>("TransactionDate")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Expenses");
+                    b.ToTable("Transaction", "TRNX");
                 });
 
             modelBuilder.Entity("Domain.Entities.BankAccount", b =>
@@ -104,7 +111,7 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("BankAccounts");
+                    b.ToTable("BankAccounts", "TRNX");
                 });
 
             modelBuilder.Entity("Domain.Entities.CreditCard", b =>
@@ -119,14 +126,20 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("CreditCards");
+                    b.ToTable("CreditCards", "TRNX");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AccountMovement", b =>
+            modelBuilder.Entity("Domain.Entities.AccountEntry", b =>
                 {
-                    b.OwnsOne("Domain.ValueObjects.Money", "Amount", b1 =>
+                    b.HasOne("Domain.Entities.Account", null)
+                        .WithMany("AccountEntries")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("SharedKernel.Domain.ValueObjects.Money", "Amount", b1 =>
                         {
-                            b1.Property<Guid>("AccountMovementId")
+                            b1.Property<Guid>("AccountEntryId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Currency")
@@ -138,12 +151,12 @@ namespace Infrastructure.Persistence.Migrations
                                 .HasColumnType("decimal(18, 2)")
                                 .HasColumnName("Amount");
 
-                            b1.HasKey("AccountMovementId");
+                            b1.HasKey("AccountEntryId");
 
-                            b1.ToTable("AccountMovements");
+                            b1.ToTable("AccountMovements", "TRNX");
 
                             b1.WithOwner()
-                                .HasForeignKey("AccountMovementId");
+                                .HasForeignKey("AccountEntryId");
                         });
 
                     b.Navigation("Amount")
@@ -166,6 +179,11 @@ namespace Infrastructure.Persistence.Migrations
                         .HasForeignKey("Domain.Entities.CreditCard", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Account", b =>
+                {
+                    b.Navigation("AccountEntries");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,10 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
-using Infrastructure.Persistence.Repositories.Shared;
+using SharedKernel.Persistence;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class CreditCardsRepository : CommandsRepository<BankAccount>, ICreditCardsRepository
+    public class CreditCardsRepository : CommandsRepository<TransactionsDbContext, BankAccount>, ICreditCardsRepository
     {
         public CreditCardsRepository(TransactionsDbContext context) : base(context)
         {

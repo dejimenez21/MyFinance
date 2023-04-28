@@ -1,5 +1,5 @@
 using Expenses.Domain.Accounts;
-using Expenses.Domain.Expenses;
+using Expenses.Domain.ExpenseGroups;
 using Microsoft.EntityFrameworkCore;
 
 namespace Expenses.Infrastructure.Persistence
@@ -7,9 +7,9 @@ namespace Expenses.Infrastructure.Persistence
     public class ExpensesDbContext : DbContext
     {
         public DbSet<Expense> Expenses { get; private set; }
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<ExpenseGroup> ExpenseGroups { get; set; }
 
-        public ExpensesDbContext(DbContextOptions options) : base(options)
+        public ExpensesDbContext(DbContextOptions<ExpensesDbContext> options) : base(options)
         {
 
         }

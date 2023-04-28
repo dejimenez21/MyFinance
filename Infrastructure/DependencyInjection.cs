@@ -13,10 +13,11 @@ namespace Infrastructure
             // Register DbContext as Singleton?
             services.AddDbContext<TransactionsDbContext>(opt => opt.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IAccountRepository, AccountsRepository>();
+            services.AddScoped<IAccountsRepository, AccountsRepository>();
             services.AddScoped<IBankAccountsRepository, BankAccountsRepository>();
             services.AddScoped<ICreditCardsRepository, CreditCardsRepository>();
             services.AddScoped<IAccountMovementsRepository, AccountMovementsRepository>();
+            services.AddScoped<ITransactionsRepository, TransactionsRepository>();
 
             return services;
         }

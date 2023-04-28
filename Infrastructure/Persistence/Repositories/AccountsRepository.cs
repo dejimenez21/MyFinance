@@ -1,15 +1,20 @@
 ﻿using Application.Domain.Enums;
 using Domain.Abstractions;
 using Domain.Entities;
-using Infrastructure.Persistence.Repositories.Shared;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Persistence;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class AccountsRepository : CommandsRepository<Account>, IAccountRepository
+    public class AccountsRepository : CommandsRepository<TransactionsDbContext, Account>, IAccountsRepository
     {
         public AccountsRepository(TransactionsDbContext context) : base(context)
         {
+        }
+
+        public async Task<Account> GetAcccountByName(string name)
+        {
+            return await _context.Accounts.FirstOrDefaultAsync(a => a.Name == name);
         }
 
         public async Task<List<Account>> GetCashAccounts()
