@@ -1,26 +1,18 @@
 ﻿using Application.Dtos;
-using Application.UseCases.Accounts;
+using Application.UseCases.Accounts.ListLiquidAccounts;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AccountsController : ControllerBase
+    public class AccountsController : BaseController
     {
-        private readonly IMediator _mediatr;
-
-        public AccountsController(IMediator mediatr)
-        {
-            _mediatr = mediatr;
-        }
+        public AccountsController(ISender sender) : base(sender) { }
 
         [HttpGet("liquidity")]
         public async Task<ActionResult<LiquidAccountDto>> GetLiquidAccounts([FromQuery]bool onlyPaymentElegible=false)
         {
-            var liquidAccounts = await _mediatr.Send(new GetLiquidAccountsSummary.Query { OnlyPaymentElegible = onlyPaymentElegible });
+            var liquidAccounts = await _sender.Send(new ListLiquidAccountsQuery { OnlyPaymentElegible = onlyPaymentElegible });
 
             return Ok(liquidAccounts);
         }

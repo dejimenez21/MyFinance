@@ -2,13 +2,12 @@
 using Domain.Entities;
 using SharedKernel.Persistence;
 
-namespace Infrastructure.Persistence.Repositories
+namespace Infrastructure.Persistence.Repositories;
+
+public class TransactionsRepository : CommandsRepository<TransactionsDbContext, Transaction>, ITransactionsRepository
 {
-    public class TransactionsRepository : CommandsRepository<TransactionsDbContext, Transaction>, ITransactionsRepository
+    public TransactionsRepository(TransactionsDbContext context) : base(context)
     {
-        public TransactionsRepository(TransactionsDbContext context) : base(context)
-        {
-            
-        }
+        
     }
 }

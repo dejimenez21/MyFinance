@@ -1,12 +1,12 @@
 import { Item } from "semantic-ui-react";
-import { Expense } from "../../app/models/expense";
 import ExpenseItem from "./ExpenseItem";
+import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-  expenses: Expense[],
-}
+const ExpensesList = () => {
+  const { expenseStore } = useStore();
+  const { expenses } = expenseStore;
 
-const ExpensesList = ({expenses}: Props) => {
   return (
     <>
       <Item.Group>
@@ -18,4 +18,4 @@ const ExpensesList = ({expenses}: Props) => {
   );
 };
 
-export default ExpensesList;
+export default observer(ExpensesList);

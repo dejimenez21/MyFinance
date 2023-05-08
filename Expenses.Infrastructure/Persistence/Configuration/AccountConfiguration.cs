@@ -8,6 +8,8 @@ namespace Expenses.Infrastructure.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<PaymentAccount> builder)
         {
+            builder.Property(e => e.Id).ValueGeneratedNever();
+
         }
     }
 }

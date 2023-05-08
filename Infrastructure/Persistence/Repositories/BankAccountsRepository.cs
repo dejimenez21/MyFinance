@@ -2,12 +2,11 @@
 using Domain.Entities;
 using SharedKernel.Persistence;
 
-namespace Infrastructure.Persistence.Repositories
+namespace Infrastructure.Persistence.Repositories;
+
+public class BankAccountsRepository : CommandsRepository<TransactionsDbContext, BankAccount>, IBankAccountsRepository
 {
-    public class BankAccountsRepository : CommandsRepository<TransactionsDbContext, CreditCard>, IBankAccountsRepository
+    public BankAccountsRepository(TransactionsDbContext context) : base(context)
     {
-        public BankAccountsRepository(TransactionsDbContext context) : base(context)
-        {
-        }
     }
 }

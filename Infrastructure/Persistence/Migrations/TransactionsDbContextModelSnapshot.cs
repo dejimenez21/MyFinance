@@ -134,7 +134,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("SharedKernel.Domain.ValueObjects.Money", "Amount", b1 =>
+                    b.OwnsOne("Domain.Entities.AccountEntry.Amount#SharedKernel.Domain.ValueObjects.Money", "Amount", b1 =>
                         {
                             b1.Property<Guid>("AccountEntryId")
                                 .HasColumnType("TEXT");

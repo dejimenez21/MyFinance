@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configuration
+namespace Infrastructure.Persistence.Configuration;
+
+internal class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
 {
-    internal class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
+    public void Configure(EntityTypeBuilder<Transaction> builder)
     {
-        public void Configure(EntityTypeBuilder<Transaction> builder)
-        {
-            
-        }
+        builder.Property(e => e.Id).ValueGeneratedNever();
+
     }
 }

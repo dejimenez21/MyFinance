@@ -1,53 +1,53 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { Container, Grid, Header } from "semantic-ui-react";
-import agent from "../../app/api/agent";
-import Liquidity from "../../app/models/liquidity";
 import LiquidityItem from "./LiquidityItem";
 import "./LiquidityDashboard.css";
+import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 const LiquidityDashboard = () => {
-  const [liquidAccounts, setLiquidAccounts] = useState<Liquidity[]>([]);
+  const { accountStore } = useStore();
+  const { groupedLiquidAccounts, loadLiquidAccounts } = accountStore;
 
   useEffect(() => {
-    agent.LiquidAccounts.list()
-      .then((accounts) => {
-        setLiquidAccounts(accounts);
-      })
-      .catch((error) => alert(error));
-  }, []);
-
-  const groupedLiquidAccounts = () => {
-    return Object.entries(
-      liquidAccounts.reduce((accounts, account) => {
-        const group = account.group;
-        const groupExist = accounts[group];
-
-        const toAdd = groupExist ? [...accounts[group], account] : [account];
-
-        accounts[group] = toAdd;
-        return accounts;
-      }, {} as { [key: string]: Liquidity[] })
-    );
-  };
+    loadLiquidAccounts();
+  }, [loadLiquidAccounts]);
 
   return (
     <>
-      {groupedLiquidAccounts().map(([group, accounts]) => (
-        <Fragment key={group}>
-          <Header as="h2" style={{marginBottom: "1em"}}>{group}</Header>
-          <Container style={{ marginBottom: "5em"}}>
-            <Grid columns={3}>
-              {accounts.map((account) => (
-                <Grid.Column key={account.id}>
-                  <LiquidityItem account={account} />
-                </Grid.Column>
-              ))}
-            </Grid>
-          </Container>
-        </Fragment>
-      ))}
+      {accountStore.liquidAccountsRegistry.size > 0 ? (
+        groupedLiquidAccounts.map(([group, accounts]) => (
+          <Fragment key={group}>
+            <Header as="h2" style={{ marginBottom: "1em" }}>
+              {group}
+            </Header>
+            <Container style={{ marginBottom: "5em" }}>
+              <Grid columns={3}>
+                {accounts.map((account) => (
+                  <Grid.Column key={account.id}>
+                    <LiquidityItem account={account} />
+                  </Grid.Column>
+                ))}
+              </Grid>
+            </Container>
+          </Fragment>
+        ))
+      ) : (
+        <Container
+          style={{
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Header as="h1" style={{ marginBottom: "1em" }}>
+            There isn't any liquid account to display
+          </Header>
+        </Container>
+      )}
     </>
   );
 };
 
-export default LiquidityDashboard;
+export default observer(LiquidityDashboard);

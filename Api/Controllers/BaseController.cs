@@ -5,6 +5,8 @@ using SharedKernel.Common;
 
 namespace Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public abstract class BaseController : ControllerBase
     {
         protected readonly ISender _sender;

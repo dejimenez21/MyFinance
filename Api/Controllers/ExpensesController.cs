@@ -1,13 +1,12 @@
-using Expenses.Application.Dtos;
-using Expenses.Application.UseCases.Expenses;
-using Expenses.Domain.ExpenseGroups;
+using Expenses.Application.UseCases.Expenses.Create;
+using Expenses.Application.UseCases.Expenses.List;
+using Expenses.Domain.Expenses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Domain.Primitives;
 
 namespace Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class ExpensesController : BaseController
     {
         public ExpensesController(ISender sender) : base(sender) { }
@@ -15,14 +14,21 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Expense>>> GetExpenses()
         {
-            return await _sender.Send(new List.Query());
+            return await _sender.Send(new ListExpensesQuery());
         }
 
         [HttpPost]
-        public async Task<ActionResult<Expense>> PostExpense(ExpenseCreateDto expense)
+        public async Task<ActionResult<Expense>> PostExpense(CreateExpenseCommand expense)
         {
-            var result = await _sender.Send(new Create.Command { Expense = expense });
+            var result = await _sender.Send(expense);
             return FromResult(result);
         }
+
+        [HttpGet("categories")]
+        public ActionResult<IEnumerable<ExpenseCategory>> GetExpenseCategories()
+        {
+            return Ok(Enumeration.GetAll<ExpenseCategory>());
+        }
+
     }
 }

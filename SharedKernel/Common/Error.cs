@@ -30,7 +30,7 @@
             if (this.GetType() != obj.GetType()) return false;
 
             var other = obj as Error;
-            return this.ErrorCode == other.ErrorCode;
+            return this.ErrorCode == other!.ErrorCode;
         }
 
         public override int GetHashCode()

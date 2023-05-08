@@ -2,7 +2,7 @@
 
 namespace SharedKernel.Domain.Abstractions;
 
-public interface IReadOnlyRepository<T> where T : Entity
+public interface IReadRepository<T> where T : Entity
 {
     Task<T> GetByIdAsync(Guid id);
     Task<List<T>> GetAllAsync();

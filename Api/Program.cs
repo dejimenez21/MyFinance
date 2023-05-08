@@ -3,6 +3,7 @@ using Domain.Services.AccountBalance;
 using Infrastructure;
 using Expenses.Infrastructure;
 using Application;
+using Expenses.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader()));
 
 builder.Services.AddApplication();
+builder.Services.AddExpensesApplication();
 builder.Services.AddTransactionsInfrastructure(builder.Configuration);
 builder.Services.AddExpensesInfrastructure(builder.Configuration);
 

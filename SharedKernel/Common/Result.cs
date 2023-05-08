@@ -25,5 +25,5 @@ public class Result
 
     public static Result<TValue> Fail<TValue>(Error error) => new(error);
 
-    protected static Result<TValue> Create<TValue>(TValue? value) => value is not null ? Success(value) : Fail<TValue>(NullValueError);
+    protected static Result<TValue> Create<TValue>(TValue? value) => value is not null ? new(value) : Fail<TValue>(NullValueError);
 }

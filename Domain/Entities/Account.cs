@@ -21,7 +21,7 @@ public class Account : AggregateRoot
     public string Name { get; protected set; }
     public AccountType Type { get; protected set; }
     public string Number { get; protected set; }
-    public CurrencyCode Currency { get; protected set; } 
+    public CurrencyCode Currency { get; protected set; }
     public DateTime OpenedDate { get; protected set; }
     public decimal OpeningBalance { get; private set; }
     public bool IsCash { get; protected set; }
@@ -61,11 +61,16 @@ public class Account : AggregateRoot
 
     public Money GetBalance()
     {
+        var openingBalance = new Money(OpeningBalance, Currency);
+
+        if (_accountEntries is null || _accountEntries.Count < 1)
+            return openingBalance;
+
         var balance = _accountEntries
             .Select(x => x.Amount)
             .Aggregate((prev, actual) => prev + actual);
 
-        balance += new Money(OpeningBalance, Currency);
+        balance += openingBalance;
 
         return balance;
     }

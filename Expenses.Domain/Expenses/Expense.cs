@@ -1,10 +1,9 @@
-using Expenses.Domain.Expenses;
 using SharedKernel.Domain.Primitives;
 using SharedKernel.Domain.ValueObjects;
 
-namespace Expenses.Domain.ExpenseGroups;
+namespace Expenses.Domain.Expenses;
 
-public class Expense : Entity
+public class Expense : AggregateRoot
 {
     public Money Amount { get; private set; }
     public string Description { get; private set; }
@@ -14,12 +13,7 @@ public class Expense : Entity
     public Guid TransactionId { get; private set; }
     public Guid? GroupId { get; private set; }
 
-    private Expense()
-    {
-
-    }
-
-    public Expense(Money amount, string description, DateTime date, ExpenseCategory category, Guid accountId, Guid transactionId, Guid? groupId)
+    public Expense(Money amount, string description, DateTime date, ExpenseCategory category, Guid accountId, Guid transactionId, Guid? groupId = null)
     {
         Id = Guid.NewGuid();
         Amount = amount;
@@ -29,5 +23,12 @@ public class Expense : Entity
         AccountId = accountId;
         TransactionId = transactionId;
         GroupId = groupId;
+    }
+
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private Expense()
+    {
+
     }
 }

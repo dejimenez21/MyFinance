@@ -1,5 +1,6 @@
 using Expenses.Domain.Accounts;
 using Expenses.Domain.ExpenseGroups;
+using Expenses.Domain.Expenses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Expenses.Infrastructure.Persistence

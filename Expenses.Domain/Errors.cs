@@ -10,11 +10,17 @@ public static class Errors
             new(404, $"{entityName}.not.found", $"'{entityName}' not found for id '{id}'");
     }
 
-    public static class Expense
+    public static class Expenses
     {
         public static Error CreateTransactionFailed(Error reason) =>
             reason is not null ?
                 new(reason.StatusCode, "create.transaction.failed", "An error has occured while creating transaction", reason) :
                 new(500, "create.transaction.failed", "An error has occured while creating transaction");
+    }
+
+    public static class Currencies
+    {
+        public static Error InvalidCurrency(string invalidCurrency) =>
+            new(400, "invalid.currency", $"The currency {invalidCurrency} is not supported.");
     }
 }

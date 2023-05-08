@@ -1,10 +1,6 @@
 ﻿using Application.Domain.Enums;
 using Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedKernel.Domain.Enums;
 
 namespace Domain.Entities
 {
@@ -18,11 +14,9 @@ namespace Domain.Entities
             
         }
 
-        public CreditCard(string name, BankCode bank, string cardNumber, PaymentNetwork network)
+        public CreditCard(string name, BankCode bank, string cardNumber, PaymentNetwork network, CurrencyCode currency, DateTime openedDate) : base(name, AccountType.Liability, cardNumber, currency, openedDate, 0)
         {
-            Name = name;
             Bank = bank;
-            Number = cardNumber;
             Network = network;
         }
     }

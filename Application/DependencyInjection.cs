@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.UseCases.Accounts.ListLiquidAccounts;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Application
@@ -7,7 +8,7 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(UseCases.Accounts.GetLiquidAccountsSummary).Assembly));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListLiquidAccountsQueryHandler).Assembly));
 
             services.AddAutoMapper(typeof(Dtos.LiquidAccountDto).Assembly);
 

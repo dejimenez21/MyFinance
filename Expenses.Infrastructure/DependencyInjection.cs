@@ -1,5 +1,6 @@
-using Domain.Abstractions;
 using Expenses.Domain.Accounts;
+using Expenses.Domain.ExpenseGroups;
+using Expenses.Domain.Expenses;
 using Expenses.Infrastructure.Persistence;
 using Expenses.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,9 @@ namespace Expenses.Infrastructure
             // Register DbContext as Singleton?
             services.AddDbContext<ExpensesDbContext>(opt => opt.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IExpenseGroupsRepository, ExpenseGroupsRepository>();
             services.AddScoped<IExpensesRepository, ExpensesRepository>();
-            services.AddScoped<IAccountsRepository, AccountsRepository>();
+            services.AddScoped<IPaymentAccountsRepository, AccountsRepository>();
 
             return services;
         }

@@ -2,7 +2,7 @@
 
 namespace SharedKernel.Domain.Primitives
 {
-    public abstract class Enumeration : IComparable
+    public abstract class Enumeration
     {
         public string Name { get; }
 
@@ -13,17 +13,15 @@ namespace SharedKernel.Domain.Primitives
 
         public override string ToString() => Name;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (!(obj is Enumeration otherValue))
+            if (obj is null || obj is not Enumeration otherValue)
                 return false;
 
             return Name.Equals(otherValue.Name);
         }
 
         public override int GetHashCode() => Name.GetHashCode();
-
-        public int CompareTo(object other) => Name.CompareTo(((Enumeration)other).Name);
 
         public static TEnumeration FromName<TEnumeration>(string name) where TEnumeration : Enumeration
         {

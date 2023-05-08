@@ -1,14 +1,5 @@
-import {
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Item,
-  Label,
-  Segment,
-} from "semantic-ui-react";
-import { Expense } from "../../app/models/expense";
+import { Divider, Grid, Header, Icon, Item, Label } from "semantic-ui-react";
+import { Expense } from "../../app/models/expenses/expense";
 
 interface Props {
   expense: Expense;
@@ -22,7 +13,7 @@ const ExpenseItem = ({ expense }: Props) => {
           <Grid>
             <Grid.Row>
               <Grid.Column width={2} textAlign="left">
-                  <Icon circular size="large" name="dollar" />
+                <Icon circular size="large" name="dollar" />
               </Grid.Column>
               <Grid.Column width={8}>
                 <Item.Header>
@@ -33,7 +24,7 @@ const ExpenseItem = ({ expense }: Props) => {
               <Grid.Column width={6} textAlign="right">
                 <Item.Description>
                   <Label size="large" color="red">
-                    ${expense.amount}
+                    ${expense.amount.value}
                   </Label>
                 </Item.Description>
                 <Item.Extra>{expense.date}</Item.Extra>

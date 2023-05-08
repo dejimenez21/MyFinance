@@ -1,8 +1,8 @@
-﻿using Expenses.Domain.ExpenseGroups;
-using Expenses.Domain.Expenses;
+﻿using Expenses.Domain.Expenses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Domain.Enums;
+using SharedKernel.Domain.Primitives;
 
 namespace Expenses.Infrastructure.Persistence.Configuration
 {
@@ -10,6 +10,8 @@ namespace Expenses.Infrastructure.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Expense> builder)
         {
+            builder.Property(e => e.Id).ValueGeneratedNever();
+
             builder.OwnsOne(am => am.Amount, money =>
             {
                 money.Property(m => m.Value)
@@ -26,7 +28,7 @@ namespace Expenses.Infrastructure.Persistence.Configuration
             builder.Property(x => x.Category)
                 .HasConversion(
                     category => category.ToString(),
-                    value => Enum.Parse<ExpenseCategory>(value));
+                    value => Enumeration.FromName<ExpenseCategory>(value));
         }
     }
 }

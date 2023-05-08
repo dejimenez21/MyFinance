@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Domain.Primitives;
 
 namespace Infrastructure
 {
@@ -21,6 +22,7 @@ namespace Infrastructure
 
             modelBuilder.HasDefaultSchema("TRNX");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TransactionsDbContext).Assembly);
+
         }
 
         public async Task<int> CommitChanges()

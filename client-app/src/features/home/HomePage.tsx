@@ -3,7 +3,6 @@ import { Card, Grid, Header, Image } from "semantic-ui-react";
 import LiquidityDashboard from "../liquidity/LiquidityDashboard";
 
 const HomePage = () => {
-
   return (
     <>
       <LiquidityDashboard />
