@@ -38,7 +38,7 @@ namespace Domain.Services.AccountBalance
             foreach (var group in groupedMovements)
             {
                 var balance = group.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual);
-                accountsBalances[group.Key] += balance;
+                accountsBalances[group.Key!] += balance;
             }
 
             return accountsBalances;

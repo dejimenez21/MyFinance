@@ -4,6 +4,6 @@ namespace Api.Errors
 {
     public class Problem : ProblemDetails
     {
-        public IEnumerable<ProblemDetails> Errors { get; set; }
+        public IEnumerable<ProblemDetails> Errors { get; set; } = new List<ProblemDetails>();
     }
 }

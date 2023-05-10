@@ -28,8 +28,6 @@ public class Account : AggregateRoot
     public bool IsElegibleForPayment { get; protected set; }
     public IReadOnlyCollection<AccountEntry> AccountEntries => _accountEntries;
 
-    protected Account() { }
-
     public Account(string name, AccountType type, string number, CurrencyCode currency, DateTime openedDate, decimal openingBalance, DateTime now, bool isCash = false, bool isElegibleForPayment = false)
     {
         if (OpenedDate > now) throw new Exception("Error creating account. OpenedDate can't be in the future.");
@@ -75,4 +73,8 @@ public class Account : AggregateRoot
         return balance;
     }
 
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    protected Account() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 }

@@ -15,7 +15,7 @@ public abstract class Entity
         if(this.GetType() != obj.GetType()) return false;
         
         var other = obj as Entity;
-        return this.Id == other.Id;
+        return this.Id == other?.Id;
     }
 
     public override int GetHashCode()
