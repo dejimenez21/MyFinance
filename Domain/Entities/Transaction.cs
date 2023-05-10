@@ -7,7 +7,7 @@ namespace Domain.Entities
 {
     public class Transaction : AggregateRoot
     {
-        private Transaction(string description, DateTimeOffset transactionDate)
+        private Transaction(string description, DateTime transactionDate)
         {
             Id = Guid.NewGuid();
             Description = description;
@@ -17,9 +17,9 @@ namespace Domain.Entities
         private Transaction() { }
 
         public string Description { get; private set; }
-        public DateTimeOffset TransactionDate { get; private set; }
+        public DateTime TransactionDate { get; private set; }
 
-        public static Transaction Create(Dictionary<Account, Money> accountOperations, DateTimeOffset transactionDate, string description)
+        public static Transaction Create(Dictionary<Account, Money> accountOperations, DateTime transactionDate, string description)
         {
             ValidateTransaction(accountOperations, description);
 

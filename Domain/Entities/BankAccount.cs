@@ -14,7 +14,7 @@ public sealed class BankAccount : Account
         
     }
 
-    public BankAccount(string name, string accountNumber, BankCode bankCode, CurrencyCode currency, DateTimeOffset openedDate, decimal openingBalance, DateTimeOffset now, bool isElegibleForPayments)
+    public BankAccount(string name, string accountNumber, BankCode bankCode, CurrencyCode currency, DateTime openedDate, decimal openingBalance, DateTime now, bool isElegibleForPayments)
         : base(name, AccountType.Asset, accountNumber, currency, openedDate, openingBalance, now, isElegibleForPayment: isElegibleForPayments)
     {
         Bank = bankCode;
