@@ -1,6 +1,6 @@
 ﻿using Expenses.Domain.ExpenseGroups;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.Persistence;
+using SharedKernel.Infrastructure.Persistence;
 
 namespace Expenses.Infrastructure.Persistence.Repositories;
 

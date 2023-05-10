@@ -22,8 +22,8 @@ public static class Seed
 
         if (!transactionsContext.Accounts.Any())
         {
-            var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, 1245, true, true);
-            var defaultExpenseAccount = new Account(AccountType.Expense.DefaultAccountName, AccountType.Expense, "EXP00000000004", CurrencyCode.DOP, DateTime.Now, 0);
+            var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, 1245, DateTime.Now, true, true);
+            var defaultExpenseAccount = new Account(AccountType.Expense.DefaultAccountName, AccountType.Expense, "EXP00000000004", CurrencyCode.DOP, DateTime.Now, 0, DateTime.Now);
             transactionsContext.Accounts.AddRange(new[] { cashAccount, defaultExpenseAccount });
         }
 
@@ -62,8 +62,8 @@ public static class Seed
     {
         return new List<CreditCard>
         {
-            new("Infinia Popular", BankCode.BPD, "8040152044645397", PaymentNetwork.VISA, CurrencyCode.DOP, DateTime.Now),
-            new("Bravo Banreservas", BankCode.BRD, "9601452487456436", PaymentNetwork.MasterCard, CurrencyCode.DOP, DateTime.Now),
+            new("Infinia Popular", BankCode.BPD, "8040152044645397", PaymentNetwork.VISA, CurrencyCode.DOP, DateTime.Now, DateTime.Now),
+            new("Bravo Banreservas", BankCode.BRD, "9601452487456436", PaymentNetwork.MasterCard, CurrencyCode.DOP, DateTime.Now, DateTime.Now),
         };
     }
 
@@ -71,8 +71,8 @@ public static class Seed
     {
         return new List<BankAccount>
         {
-            new("Ahorros Popular", "804015204", BankCode.BPD, CurrencyCode.DOP, DateTime.Now, 1451, true),
-            new("Corriente Banreservas", "960145248", BankCode.BRD, CurrencyCode.DOP, DateTime.Now, 25400, true)
+            new("Ahorros Popular", "804015204", BankCode.BPD, CurrencyCode.DOP, DateTime.Now, 1451, DateTime.Now, true),
+            new("Corriente Banreservas", "960145248", BankCode.BRD, CurrencyCode.DOP, DateTime.Now, 25400, DateTime.Now, true)
         };
     }
 }

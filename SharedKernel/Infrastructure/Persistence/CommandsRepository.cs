@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using SharedKernel.Domain.Abstractions;
 using SharedKernel.Domain.Primitives;
 
-namespace SharedKernel.Persistence;
+namespace SharedKernel.Infrastructure.Persistence;
 
-public abstract class CommandsRepository<TContext, TEntity> : ICommandRepository<TEntity>, IReadRepository<TEntity> 
+public abstract class CommandsRepository<TContext, TEntity> : ICommandRepository<TEntity>, IReadRepository<TEntity>
     where TContext : DbContext
     where TEntity : AggregateRoot
 {
@@ -28,9 +28,9 @@ public abstract class CommandsRepository<TContext, TEntity> : ICommandRepository
 
     public async Task<TEntity> GetByIdAsync(Guid id)
         => await GetWithIncludeAll().FirstOrDefaultAsync(e => e.Id == id);
-        //=> await _context.Set<TEntity>().FindAsync(id);
+    //=> await _context.Set<TEntity>().FindAsync(id);
 
-    public async Task<List<TEntity>> GetAllAsync() => 
+    public async Task<List<TEntity>> GetAllAsync() =>
         await GetWithIncludeAll().ToListAsync();
 
     public async Task<List<TEntity>> GetByIdsAsync(Guid[] ids)

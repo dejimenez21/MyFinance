@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.Persistence;
+using SharedKernel.Infrastructure.Persistence;
 
 namespace Infrastructure.Persistence.Repositories;
 

@@ -4,6 +4,7 @@ using Infrastructure;
 using Expenses.Infrastructure;
 using Application;
 using Expenses.Application;
+using SharedKernel.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader()));
+
+builder.Services.AddScoped<IDateTimes, DateTimes>();
 
 builder.Services.AddApplication();
 builder.Services.AddExpensesApplication();
