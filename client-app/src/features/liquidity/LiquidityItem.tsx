@@ -1,6 +1,7 @@
-import { Card, Container, Grid, Header, Image } from "semantic-ui-react";
+import { Card, Grid, Header, Image } from "semantic-ui-react";
 import Liquidity from "../../app/models/liquidity";
 import "./LiquidityDashboard.css";
+import utils from "../../app/utils/assetsUtils";
 
 interface Props {
   account: Liquidity;
@@ -12,7 +13,7 @@ const LiquidityItem = ({account}: Props) => {
         <Card className="liquidity-item">
           <Card.Content>
             <Image
-              src={`./assets/bankImages/${account.bankCode ? account.bankCode : "cash"}.jpg`}
+              src={utils.getLiquidAccountIcon(account.bankCode)}
               size="mini"
               floated="right"
             />

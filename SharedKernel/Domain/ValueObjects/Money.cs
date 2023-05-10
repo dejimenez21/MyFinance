@@ -23,4 +23,9 @@ public record Money(decimal Value, CurrencyCode Currency)
 
         return new Money(left.Value - right.Value, left.Currency);
     }
+
+    public static Money operator -(Money current)
+    {
+        return new Money(-current.Value, current.Currency);
+    }
 }

@@ -1,25 +1,24 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
-using Infrastructure.Persistence.Repositories.Shared;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Persistence;
 
-namespace Infrastructure.Persistence.Repositories
+namespace Infrastructure.Persistence.Repositories;
+
+public class AccountMovementsRepository : ReadOnlyRepository<TransactionsDbContext, AccountEntry>, IAccountMovementsRepository
 {
-    public class AccountMovementsRepository : BaseRepository<AccountMovement>, IAccountMovementsRepository
+    public AccountMovementsRepository(TransactionsDbContext context) : base(context)
     {
-        public AccountMovementsRepository(AppDbContext context) : base(context)
-        {
-            
-        }
+        
+    }
 
-        public async Task<IEnumerable<AccountMovement>> GetMovementsByAccountId(Guid accountId)
-        {
-            return await _context.AccountMovements.Where(m => m.AccountId == accountId).AsNoTracking().ToListAsync();
-        }
+    public async Task<IEnumerable<AccountEntry>> GetMovementsByAccountId(Guid accountId)
+    {
+        return await _context.AccountMovements.Where(m => m.AccountId == accountId).AsNoTracking().ToListAsync();
+    }
 
-        public async Task<IEnumerable<AccountMovement>> GetMovementsByMultipleAccountIds(IEnumerable<Guid> accountIds)
-        {
-            return await _context.AccountMovements.Where(m => accountIds.Contains(m.AccountId)).AsNoTracking().ToListAsync();
-        }
+    public async Task<IEnumerable<AccountEntry>> GetMovementsByMultipleAccountIds(IEnumerable<Guid> accountIds)
+    {
+        return await _context.AccountMovements.Where(m => accountIds.Contains(m.AccountId)).AsNoTracking().ToListAsync();
     }
 }

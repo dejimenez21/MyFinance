@@ -3,9 +3,9 @@ using SharedKernel.Domain.Abstractions;
 
 namespace Domain.Abstractions
 {
-    public interface IAccountMovementsRepository : IRepository<AccountMovement>
+    public interface IAccountMovementsRepository : IReadRepository<AccountEntry>
     {
-        Task<IEnumerable<AccountMovement>> GetMovementsByAccountId(Guid accountId);
-        Task<IEnumerable<AccountMovement>> GetMovementsByMultipleAccountIds(IEnumerable<Guid> accountIds);
+        Task<IEnumerable<AccountEntry>> GetMovementsByAccountId(Guid accountId);
+        Task<IEnumerable<AccountEntry>> GetMovementsByMultipleAccountIds(IEnumerable<Guid> accountIds);
     }
 }

@@ -1,31 +1,34 @@
-using Application.UseCases.Expenses;
-using Domain.Entities;
+using Expenses.Application.UseCases.Expenses.Create;
+using Expenses.Application.UseCases.Expenses.List;
+using Expenses.Domain.Expenses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Domain.Primitives;
 
 namespace Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ExpensesController : ControllerBase
+    public class ExpensesController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public ExpensesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public ExpensesController(ISender sender) : base(sender) { }
 
         [HttpGet]
         public async Task<ActionResult<List<Expense>>> GetExpenses()
         {
-            return await _mediator.Send(new List.Query());
+            return await _sender.Send(new ListExpensesQuery());
         }
 
         [HttpPost]
-        public async Task<ActionResult<Expense>> PostExpense(Expense expense)
+        public async Task<ActionResult<Expense>> PostExpense(CreateExpenseCommand expense)
         {
-            return await _mediator.Send(new Create.Command { Expense = expense });
+            var result = await _sender.Send(expense);
+            return FromResult(result);
         }
+
+        [HttpGet("categories")]
+        public ActionResult<IEnumerable<ExpenseCategory>> GetExpenseCategories()
+        {
+            return Ok(Enumeration.GetAll<ExpenseCategory>());
+        }
+
     }
 }

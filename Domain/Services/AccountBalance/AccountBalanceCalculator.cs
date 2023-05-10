@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using SharedKernel.Domain.Services.AccountBalance;
+using Domain.Entities;
 using SharedKernel.Domain.ValueObjects;
 
 namespace Domain.Services.AccountBalance
@@ -8,9 +8,9 @@ namespace Domain.Services.AccountBalance
     public class AccountBalanceCalculator : IAccountBalanceService
     {
         private readonly IAccountMovementsRepository _movementsRepository;
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountsRepository _accountRepository;
 
-        public AccountBalanceCalculator(IAccountMovementsRepository movementsRepository, IAccountRepository accountRepository)
+        public AccountBalanceCalculator(IAccountMovementsRepository movementsRepository, IAccountsRepository accountRepository)
         {
             _movementsRepository = movementsRepository;
             _accountRepository = accountRepository;
@@ -23,22 +23,21 @@ namespace Domain.Services.AccountBalance
             return movements.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual) + new Money(account.OpeningBalance, account.Currency);
         }
 
-        public async Task<Dictionary<Guid, Money>> GetAccountsBalances(IEnumerable<Guid> accountIds)
+        public async Task<Dictionary<Account, Money>> GetAccountsBalances(IEnumerable<Guid> accountIds)
         {
             var movements = await _movementsRepository.GetMovementsByMultipleAccountIds(accountIds);
             var accounts = await _accountRepository.GetByIdsAsync(accountIds.ToArray());
 
-            var groupedMovements = movements.GroupBy(m => m.AccountId);
+            var groupedMovements = movements.GroupBy(m => accounts.Find(a => a.Id == m.Id));
 
             var accountsBalances = accounts.ToDictionary(
-                account => account.Id,
+                account => account,
                 account => new Money(account.OpeningBalance, account.Currency)
             );
 
             foreach (var group in groupedMovements)
             {
                 var balance = group.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual);
-
                 accountsBalances[group.Key] += balance;
             }
 

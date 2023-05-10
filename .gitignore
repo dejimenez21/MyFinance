@@ -478,3 +478,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/Api/MyFinance.db-shm
+/Api/MyFinance.db-wal

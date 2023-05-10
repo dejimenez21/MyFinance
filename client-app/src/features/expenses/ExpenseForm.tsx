@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Form, Input, Modal } from 'semantic-ui-react';
+import React, { useEffect, useState } from "react";
+import { Button, Dropdown, Form, Input, Modal } from "semantic-ui-react";
+import { Expense } from "../../app/models/expenses/expense";
+import currencyOptions from "../../app/models/currencyOptions";
+import { useStore } from "../../app/stores/store";
+import PaymentAccountDropdownItem from "../liquidity/PaymentAccountDropdownItem";
+import { observer } from "mobx-react-lite";
 
 interface Props {
   modalOpen: boolean;
@@ -7,24 +12,79 @@ interface Props {
   handleSubmit: (expense: Expense) => void;
 }
 
-export interface Expense {
-  id: string;
-  amount: number;
-  description: string;
-  date: string;
-}
-
 const ExpenseForm = ({ modalOpen, handleClose, handleSubmit }: Props) => {
+  const { accountStore, expenseGroupStore, expenseStore } = useStore();
+  const { liquidAccounts, loadLiquidAccounts } = accountStore;
+  const { expenseGroups, loadExpenseGroups } =
+    expenseGroupStore;
+  const { loadCategories, categories } = expenseStore;
+
+  useEffect(() => {
+    loadLiquidAccounts(true);
+    loadExpenseGroups();
+    loadCategories();
+  }, [loadLiquidAccounts, loadExpenseGroups, loadCategories]);
+
   const [expenseData, setExpenseData] = useState<Expense>({
-    id: '',
-    description: '',
-    amount: 0,
-    date: '',
+    id: "",
+    description: "",
+    amount: { value: 0, currency: "DOP" },
+    date: new Date().toISOString().split("T")[0],
+    accountId: "",
+    groupId: undefined,
+    category: ""
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, data: any) => {
+  const accountsOptions = () =>
+    liquidAccounts.map((account) => {
+      return {
+        key: account.id,
+        value: account.id,
+        text: account.alias,
+        name: "accountId",
+        content: <PaymentAccountDropdownItem account={account} />,
+      };
+    });
+
+  const groupsOptions = () => {
+    return expenseGroups.map((group) => {
+      return {
+        key: group.id,
+        value: group.id,
+        text: group.name,
+      };
+    });
+  };
+
+  const cateogoriesOptions = () => {
+    return categories.map((category) => {
+      return {
+        key: category.name,
+        value: category.name,
+        text: category.displayName,
+      };
+    });
+  };
+
+  const handleChange = (_: React.SyntheticEvent<HTMLElement>, data: any) => {
     const { name, value } = data;
-    setExpenseData({ ...expenseData, [name]: name === 'amount' ? parseFloat(value) : value });
+
+    if (name === "amount.value") {
+      setExpenseData({
+        ...expenseData,
+        amount: { ...expenseData.amount, value: parseFloat(value) },
+      });
+    } else if (name === "amount.currency") {
+      setExpenseData({
+        ...expenseData,
+        amount: { ...expenseData.amount, currency: value },
+      });
+    } else {
+      setExpenseData({
+        ...expenseData,
+        [name]: value,
+      });
+    }
   };
 
   return (
@@ -43,11 +103,17 @@ const ExpenseForm = ({ modalOpen, handleClose, handleSubmit }: Props) => {
           <Form.Field
             control={Input}
             label="Amount"
-            name="amount"
+            name="amount.value"
             placeholder="Amount"
             type="number"
-            step="0.01"
-            value={expenseData.amount}
+            value={expenseData.amount.value}
+            onChange={handleChange}
+          />
+          <Form.Select
+            label="Currency"
+            name="amount.currency"
+            options={currencyOptions}
+            value={expenseData.amount.currency}
             onChange={handleChange}
           />
           <Form.Field
@@ -59,11 +125,45 @@ const ExpenseForm = ({ modalOpen, handleClose, handleSubmit }: Props) => {
             value={expenseData.date}
             onChange={handleChange}
           />
-          <Button type="submit" color="teal" content="Submit" onClick={() => handleSubmit(expenseData)} />
+          <Form.Field>
+            <label>Payment Account</label>
+            <Dropdown
+              name="accountId"
+              selection
+              direction="right"
+              value={expenseData.accountId}
+              onChange={handleChange}
+              options={accountsOptions()}
+            />
+          </Form.Field>
+          {/* TODO: Make this a search select */}
+          <Form.Select
+            label="Category"
+            name="category"
+            options={cateogoriesOptions()}
+            value={expenseData.category}
+            onChange={handleChange}
+            placeholder="Select Category"
+          />
+          {/* TODO: Change this field for better experience. Show the option of No Group. */}
+          <Form.Select
+            label="Group"
+            name="groupId"
+            options={groupsOptions()}
+            value={expenseData.groupId}
+            onChange={handleChange}
+            placeholder="Select Expense Group"
+          />
+          <Button
+            type="submit"
+            color="teal"
+            content="Submit"
+            onClick={() => handleSubmit(expenseData)}
+          />
         </Form>
       </Modal.Content>
     </Modal>
   );
 };
 
-export default ExpenseForm;
+export default observer(ExpenseForm);
