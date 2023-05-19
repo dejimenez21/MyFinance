@@ -4,8 +4,8 @@ import Liquidity from "../models/liquidity";
 import { ExpenseGroup } from "../models/expenses/expenseGroup";
 import ExpenseCategory from "../models/expenses/expenseCategory";
 
-axios.defaults.baseURL = "https://localhost:44348/api";
-// axios.defaults.baseURL = "http://localhost:5244/api";
+// axios.defaults.baseURL = "https://localhost:44348/api";
+axios.defaults.baseURL = "http://localhost:46856/api";
 
 axios.interceptors.response.use(
   (response) => {

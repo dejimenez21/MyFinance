@@ -14,8 +14,14 @@ public record CardExpirationDate : ValueObject
         Year = Guard.Against.OutOfRange(year, nameof(year), now.Year - 1, DateTime.MaxValue.Year, $"The year {year} is lower than the current year");
     }
 
-    private CardExpirationDate()
+    public override string ToString()
     {
-        
+        return $"{Month}/{Year}";
     }
+
+    #region EF Core parameterless constructor
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private CardExpirationDate() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    #endregion
 }

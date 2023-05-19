@@ -25,4 +25,9 @@ public class BankAccount : AggregateRoot
         DebitCard = debitCard;
     }
 
+    #region EF Core parameterless constructor
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private BankAccount() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    #endregion
 }

@@ -27,11 +27,11 @@ public static class Seed
             transactionsContext.Accounts.AddRange(new[] { cashAccount, defaultExpenseAccount });
         }
 
-        if (!transactionsContext.CreditCards.Any())
-            transactionsContext.CreditCards.AddRange(CreditCards());
+        if (!transactionsContext.TCreditCards.Any())
+            transactionsContext.TCreditCards.AddRange(CreditCards());
 
-        if (!transactionsContext.BankAccounts.Any())
-            transactionsContext.BankAccounts.AddRange(BankAccounts());
+        if (!transactionsContext.TBankAccounts.Any())
+            transactionsContext.TBankAccounts.AddRange(BankAccounts());
 
         transactionsContext.SaveChanges();
         expensesContext.SaveChanges();

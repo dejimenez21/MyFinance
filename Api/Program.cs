@@ -5,6 +5,7 @@ using Expenses.Infrastructure;
 using Application;
 using Expenses.Application;
 using SharedKernel.Infrastructure;
+using FinancialTools.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddApplication();
 builder.Services.AddExpensesApplication();
 builder.Services.AddTransactionsInfrastructure(builder.Configuration);
 builder.Services.AddExpensesInfrastructure(builder.Configuration);
+builder.Services.AddFinancialToolsInfrastructure(builder.Configuration);
 
 #region DomainServices
 builder.Services.AddTransient<IAccountBalanceService, AccountBalanceCalculator>();

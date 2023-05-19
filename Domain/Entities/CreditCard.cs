@@ -17,7 +17,7 @@ namespace Domain.Entities
             
         }
 
-        public CreditCard(string name, BankCode bank, string cardNumber, PaymentNetwork network, CurrencyCode currency, DateTime openedDate, DateTime now, decimal creditLimit) : base(name, AccountType.Liability, cardNumber, currency, openedDate, 0, now)
+        public CreditCard(string name, BankCode bank, string cardNumber, PaymentNetwork network, CurrencyCode currency, DateTime openedDate, DateTime now) : base(name, AccountType.Liability, cardNumber, currency, openedDate, 0, now)
         {
             Bank = bank;
             Network = network;
