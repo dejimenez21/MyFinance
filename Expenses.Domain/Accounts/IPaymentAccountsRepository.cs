@@ -1,8 +1,7 @@
 ﻿using SharedKernel.Domain.Abstractions;
 
-namespace Expenses.Domain.Accounts
+namespace Expenses.Domain.Accounts;
+
+public interface IPaymentAccountsRepository : IReadRepository<PaymentAccount>
 {
-    public interface IPaymentAccountsRepository : IReadRepository<PaymentAccount>
-    {
-    }
 }

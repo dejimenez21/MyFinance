@@ -6,7 +6,7 @@ public sealed class ExpenseGroup : AggregateRoot
 {
     public string Name { get; private set; }
     public string Description { get; private set; }
-    public Guid ExpenseAccountId { get; set; }
+    public Guid ExpenseAccountId { get; private set; }
 
     public ExpenseGroup(string name, string description, Guid expenseAccountId)
     {

@@ -1,6 +1,6 @@
 ﻿using Application.Domain.Enums;
 using Domain.Entities;
-using Domain.Enums;
+using Expenses.Domain.Accounts;
 using Expenses.Domain.ExpenseGroups;
 using Expenses.Domain.Expenses;
 using Expenses.Infrastructure.Persistence;
@@ -20,6 +20,9 @@ public static class Seed
         if (!expensesContext.ExpenseGroups.Any())
             expensesContext.ExpenseGroups.AddRange(ExpensesGroups());
 
+        if (!expensesContext.PaymentAccounts.Any())
+            expensesContext.PaymentAccounts.AddRange(PaymentAccounts());
+
         if (!transactionsContext.Accounts.Any())
         {
             var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, 1245, DateTime.Now, true, true);
@@ -27,14 +30,25 @@ public static class Seed
             transactionsContext.Accounts.AddRange(new[] { cashAccount, defaultExpenseAccount });
         }
 
-        if (!transactionsContext.CreditCards.Any())
-            transactionsContext.CreditCards.AddRange(CreditCards());
+        //if (!transactionsContext.CreditCards.Any())
+        //    transactionsContext.CreditCards.AddRange(CreditCards());
 
-        if (!transactionsContext.BankAccounts.Any())
-            transactionsContext.BankAccounts.AddRange(BankAccounts());
+        //if (!transactionsContext.BankAccounts.Any())
+        //    transactionsContext.BankAccounts.AddRange(BankAccounts());
 
         transactionsContext.SaveChanges();
         expensesContext.SaveChanges();
+    }
+
+    private static PaymentAccount[] PaymentAccounts()
+    {
+        return new PaymentAccount[]
+        {
+            new(Guid.NewGuid(), "Cash", PaymentMethod.CASH, string.Empty, new[]{CurrencyCode.DOP}, null, null),
+            new(Guid.NewGuid(), "Infinia Popular", PaymentMethod.CREDIT_CARD, "5415996673367998", new[] {CurrencyCode.DOP}, BankCode.BPD, PaymentNetwork.MasterCard),
+            new(Guid.NewGuid(), "Visa Bravo", PaymentMethod.CREDIT_CARD, "4003081012454053", new[] {CurrencyCode.DOP, CurrencyCode.USD}, BankCode.SBD, PaymentNetwork.VISA),
+            new(Guid.NewGuid(), "Cuenta Popular", PaymentMethod.BANK_ACCOUNT, "804015204", new[] {CurrencyCode.DOP}, BankCode.BPD, null)
+        };
     }
 
     private static List<Expense> Expenses()
@@ -58,21 +72,21 @@ public static class Seed
         };
     }
 
-    private static List<CreditCard> CreditCards()
-    {
-        return new List<CreditCard>
-        {
-            new("Infinia Popular", BankCode.BPD, "8040152044645397", PaymentNetwork.VISA, CurrencyCode.DOP, DateTime.Now, DateTime.Now),
-            new("Bravo Banreservas", BankCode.BRD, "9601452487456436", PaymentNetwork.MasterCard, CurrencyCode.DOP, DateTime.Now, DateTime.Now),
-        };
-    }
+    //private static List<CreditCard> CreditCards()
+    //{
+    //    return new List<CreditCard>
+    //    {
+    //        new("Infinia Popular", BankCode.BPD, "8040152044645397", PaymentNetwork.VISA, CurrencyCode.DOP, DateTime.Now, DateTime.Now),
+    //        new("Bravo Banreservas", BankCode.BRD, "9601452487456436", PaymentNetwork.MasterCard, CurrencyCode.DOP, DateTime.Now, DateTime.Now),
+    //    };
+    //}
 
-    private static List<BankAccount> BankAccounts()
-    {
-        return new List<BankAccount>
-        {
-            new("Ahorros Popular", "804015204", BankCode.BPD, CurrencyCode.DOP, DateTime.Now, 1451, DateTime.Now, true),
-            new("Corriente Banreservas", "960145248", BankCode.BRD, CurrencyCode.DOP, DateTime.Now, 25400, DateTime.Now, true)
-        };
-    }
+    //private static List<BankAccount> BankAccounts()
+    //{
+    //    return new List<BankAccount>
+    //    {
+    //        new("Ahorros Popular", "804015204", BankCode.BPD, CurrencyCode.DOP, DateTime.Now, 1451, DateTime.Now, true),
+    //        new("Corriente Banreservas", "960145248", BankCode.BRD, CurrencyCode.DOP, DateTime.Now, 25400, DateTime.Now, true)
+    //    };
+    //}
 }

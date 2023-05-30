@@ -9,6 +9,7 @@ namespace Expenses.Infrastructure.Persistence
     {
         public DbSet<Expense> Expenses { get; private set; }
         public DbSet<ExpenseGroup> ExpenseGroups { get; set; }
+        public DbSet<PaymentAccount> PaymentAccounts { get; set; }
 
         public ExpensesDbContext(DbContextOptions<ExpensesDbContext> options) : base(options)
         {
