@@ -1,16 +1,15 @@
-import React from "react";
-import { Container, Divider } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import "./App.css";
-import ExpensesList from "../../features/expenses/ExpensesList";
 import NavBar from "./NavBar";
-import ExpensesDashboard from "../../features/expenses/ExpensesDashboard";
 import { Outlet } from "react-router-dom";
+import HeaderSection from "./HeaderSection";
+import { Fragment } from "react";
 
 function App() {
   return (
     <>
-      <NavBar />
-      <Container style={{ marginTop: "5em" }}>
+      <HeaderSection />
+      <Container as="main" className="main">
         <Outlet />
       </Container>
     </>

@@ -10,8 +10,8 @@ const NavBar = () => {
 
   return (
     <>
-      <Menu inverted fixed="top"  tabular>
-        <Container fluid className="bar">
+      <Menu pointing secondary style={{marginTop: 0}} >
+        <Container className="bar">
           <Menu.Item
             name="home"
             as={NavLink}

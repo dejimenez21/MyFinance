@@ -1,0 +1,11 @@
+.title-bar {
+    max-width: 1200px !important;
+    min-width: 1200px !important;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.title-bar-container {
+    background-color: #21A286 !important;
+    border-radius: 0% !important;
+}

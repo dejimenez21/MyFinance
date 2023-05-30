@@ -1,0 +1,11 @@
+.balance-header {
+    justify-content: space-between !important;
+    align-items: center !important;
+    display: flex !important;
+}
+
+.amount-section {
+    display: flex !important;
+    font-size: 1.1rem !important;
+    justify-content: space-between;
+}
