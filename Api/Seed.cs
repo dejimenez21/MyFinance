@@ -14,14 +14,14 @@ public static class Seed
 {
     public static void SeedData(TransactionsDbContext transactionsContext, ExpensesDbContext expensesContext)
     {
-        if (!expensesContext.Expenses.Any())
-            expensesContext.Expenses.AddRange(Expenses());
-
         if (!expensesContext.ExpenseGroups.Any())
             expensesContext.ExpenseGroups.AddRange(ExpensesGroups());
 
         if (!expensesContext.PaymentAccounts.Any())
             expensesContext.PaymentAccounts.AddRange(PaymentAccounts());
+
+        var expensesSeeder = new ExpensesDataSeeder(expensesContext);
+        expensesSeeder.SeedDataAsync().Wait();
 
         if (!transactionsContext.Accounts.Any())
         {
