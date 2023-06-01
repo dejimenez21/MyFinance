@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Expense } from "../models/expenses/expense";
-import agent from "../api/agent";
-import ExpenseCategory from "../models/expenses/expenseCategory";
+import { Expense } from "../../models/expenses/expense";
+import agent from "../../api/agent";
+import ExpenseCategory from "../../models/expenses/expenseCategory";
 
 export class ExpenseStore {
   expensesRegistry = new Map<string, Expense>();

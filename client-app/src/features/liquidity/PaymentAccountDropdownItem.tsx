@@ -1,9 +1,10 @@
 import { Grid, Header, Image } from "semantic-ui-react";
-import Liquidity from "../../app/models/liquidity";
 import utils from "../../app/utils/assetsUtils";
+import PaymentAccount from "../../app/models/expenses/paymentAccount";
+import { paymentMethods } from "../../app/models/expenses/paymentMethod";
 
 interface Props {
-  account: Liquidity;
+  account: PaymentAccount;
 }
 
 const PaymentAccountDropdownItem = ({ account }: Props) => {
@@ -12,15 +13,24 @@ const PaymentAccountDropdownItem = ({ account }: Props) => {
       <Grid.Row>
         <Grid.Column width={1} textAlign="left" verticalAlign="middle">
           <Image
-            src={utils.getLiquidAccountIcon(account.bankCode)}
+            src={utils.getLiquidAccountIcon(account.bank)}
             size="mini"
             floated="left"
           />
         </Grid.Column>
-        <Grid.Column width={11}>{account.alias}</Grid.Column>
-        <Grid.Column width={4} textAlign="right">
-          <Header color={account.balance > 0 ? 'green' : "red"}>{account.balance}</Header>
+        <Grid.Column width={14}>
+          {account.bank ? `${account.number} - ` : ""}
+          {account.name}
         </Grid.Column>
+        {account.network ? (
+        <Grid.Column width={1} textAlign="right" verticalAlign="middle">
+          <Image
+            src={utils.getPaymentNetworkImage(account.network!)}
+            size="mini"
+            floated="right"
+          />
+        </Grid.Column>
+        ) : ""} 
       </Grid.Row>
     </Grid>
   );

@@ -1,18 +1,21 @@
 import { createContext, useContext } from "react";
 import { AccountStore } from "./accountStore";
-import { ExpenseStore } from "./expenseStore";
-import { ExpenseGroupStore } from "./expenseGroupStore";
+import { ExpenseStore } from "./expenses/expenseStore";
+import { ExpenseGroupStore } from "./expenses/expenseGroupStore";
+import { PaymentAccountStore } from "./expenses/paymentAccountStore";
 
 interface Store {
   accountStore: AccountStore;
   expenseStore: ExpenseStore;
-  expenseGroupStore: ExpenseGroupStore
+  expenseGroupStore: ExpenseGroupStore;
+  paymentAccountStore: PaymentAccountStore;
 }
 
 export const store: Store = {
   accountStore: new AccountStore(),
   expenseStore: new ExpenseStore(),
-  expenseGroupStore: new ExpenseGroupStore()
+  expenseGroupStore: new ExpenseGroupStore(),
+  paymentAccountStore: new PaymentAccountStore(),
 };
 
 export const StoreContext = createContext(store);

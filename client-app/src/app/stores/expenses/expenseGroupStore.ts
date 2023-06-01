@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { ExpenseGroup } from "../models/expenses/expenseGroup";
-import agent from "../api/agent";
+import { ExpenseGroup } from "../../models/expenses/expenseGroup";
+import agent from "../../api/agent";
 
 export class ExpenseGroupStore {
   expenseGroupsRegistry = new Map<string, ExpenseGroup>();

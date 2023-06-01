@@ -480,3 +480,6 @@ $RECYCLE.BIN/
 *.lnk
 /Api/MyFinance.db-shm
 /Api/MyFinance.db-wal
+
+# Added
+*.http

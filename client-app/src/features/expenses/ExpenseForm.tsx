@@ -5,6 +5,7 @@ import currencyOptions from "../../app/models/currencyOptions";
 import { useStore } from "../../app/stores/store";
 import PaymentAccountDropdownItem from "../liquidity/PaymentAccountDropdownItem";
 import { observer } from "mobx-react-lite";
+import { PaymentAccountStore } from "../../app/stores/expenses/paymentAccountStore";
 
 interface Props {
   modalOpen: boolean;
@@ -13,17 +14,17 @@ interface Props {
 }
 
 const ExpenseForm = ({ modalOpen, handleClose, handleSubmit }: Props) => {
-  const { accountStore, expenseGroupStore, expenseStore } = useStore();
-  const { liquidAccounts, loadLiquidAccounts } = accountStore;
+  const { paymentAccountStore, expenseGroupStore, expenseStore } = useStore();
+  const { paymentAccounts, loadPaymentAccounts } = paymentAccountStore;
   const { expenseGroups, loadExpenseGroups } =
     expenseGroupStore;
   const { loadCategories, categories } = expenseStore;
 
   useEffect(() => {
-    loadLiquidAccounts(true);
+    loadPaymentAccounts();
     loadExpenseGroups();
     loadCategories();
-  }, [loadLiquidAccounts, loadExpenseGroups, loadCategories]);
+  }, [loadPaymentAccounts, loadExpenseGroups, loadCategories]);
 
   const [expenseData, setExpenseData] = useState<Expense>({
     id: "",
@@ -36,11 +37,11 @@ const ExpenseForm = ({ modalOpen, handleClose, handleSubmit }: Props) => {
   });
 
   const accountsOptions = () =>
-    liquidAccounts.map((account) => {
+    paymentAccounts.map((account) => {
       return {
         key: account.id,
         value: account.id,
-        text: account.alias,
+        text: account.name,
         name: "accountId",
         content: <PaymentAccountDropdownItem account={account} />,
       };
