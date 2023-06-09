@@ -18,7 +18,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Expense>> PostExpense(CreateExpenseCommand expense)
+        public async Task<ActionResult<Expense>> PostExpense(CreateExpenseCommandV1 expense)
         {
             var result = await _sender.Send(expense);
             return FromResult(result);

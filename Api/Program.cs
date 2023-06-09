@@ -24,6 +24,8 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.Wi
 
 builder.Services.AddScoped<IDateTimes, DateTimes>();
 
+builder.Services.RegisterAllDbContexts(builder.Configuration, builder.Environment);
+
 builder.Services.AddApplication();
 builder.Services.AddExpensesApplication();
 builder.Services.AddTransactionsInfrastructure(builder.Configuration);
@@ -54,6 +56,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.InitializeDatabase();
+app.InitializeDatabase(app.Environment);
 
 app.Run();

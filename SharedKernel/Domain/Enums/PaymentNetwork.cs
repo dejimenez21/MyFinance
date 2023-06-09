@@ -3,5 +3,6 @@
 public enum PaymentNetwork
 {
     VISA,
-    MasterCard
+    MasterCard,
+    AMEX
 }
