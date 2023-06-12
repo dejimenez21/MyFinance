@@ -6,6 +6,7 @@ using Application;
 using Expenses.Application;
 using SharedKernel.Infrastructure;
 using System.Text.Json.Serialization;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,9 @@ builder.Services.AddExpensesInfrastructure(builder.Configuration);
 #region DomainServices
 builder.Services.AddTransient<IAccountBalanceService, AccountBalanceCalculator>();
 #endregion
+
+builder.Host.UseSerilog((context, configuration) => 
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
