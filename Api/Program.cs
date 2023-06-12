@@ -7,6 +7,8 @@ using Expenses.Application;
 using SharedKernel.Infrastructure;
 using System.Text.Json.Serialization;
 using Serilog;
+using System.Net;
+using Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +52,10 @@ if (app.Environment.IsDevelopment())
         context.Response.Redirect("/swagger/");
         return Task.CompletedTask;
     });
+}
+else
+{
+    app.UseMiddleware<ExceptionMiddleware>();
 }
 
 // app.UseHttpsRedirection();
