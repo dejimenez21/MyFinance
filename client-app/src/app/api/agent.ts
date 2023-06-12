@@ -5,8 +5,7 @@ import { ExpenseGroup } from "../models/expenses/expenseGroup";
 import ExpenseCategory from "../models/expenses/expenseCategory";
 import PaymentAccount from "../models/expenses/paymentAccount";
 
-axios.defaults.baseURL = "https://localhost:44348/api";
-// axios.defaults.baseURL = "http://localhost:5244/api";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.response.use(
   (response) => {
