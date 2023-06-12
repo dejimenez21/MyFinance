@@ -20,7 +20,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader()));
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins(builder.Configuration.GetValue<string>("AllowedHosts") ?? "http://localhost").AllowAnyMethod().AllowAnyHeader()));
 
 builder.Services.AddScoped<IDateTimes, DateTimes>();
 
