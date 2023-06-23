@@ -2,10 +2,11 @@ using Expenses.Domain.Accounts;
 using Expenses.Domain.ExpenseGroups;
 using Expenses.Domain.Expenses;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Infrastructure.Persistence;
 
 namespace Expenses.Infrastructure.Persistence
 {
-    public class ExpensesDbContext : DbContext
+    public class ExpensesDbContext : ApplicationDbContext
     {
         public DbSet<Expense> Expenses { get; private set; }
         public DbSet<ExpenseGroup> ExpenseGroups { get; set; }

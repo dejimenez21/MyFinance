@@ -1,10 +1,10 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.Domain.Primitives;
+using SharedKernel.Infrastructure.Persistence;
 
 namespace Infrastructure
 {
-    public class TransactionsDbContext : DbContext
+    public class TransactionsDbContext : ApplicationDbContext
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
