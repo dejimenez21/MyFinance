@@ -7,10 +7,8 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 const ExpensesDashboard = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
   const { expenseStore } = useStore();
-  const { loadExpenses, addExpense } = expenseStore;
+  const { loadExpenses, addExpense, modalOpen, setModalOpen } = expenseStore;
 
   const handleOpen = () => {
     setModalOpen(true);
@@ -22,7 +20,6 @@ const ExpensesDashboard = () => {
 
   const handleSubmit = (expense: Expense) => {
     addExpense(expense);
-    setModalOpen(false);
   };
 
   useEffect(() => {

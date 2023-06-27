@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeAutoObservable, runInAction } from "mobx";
 import { Expense } from "../../models/expenses/expense";
 import agent from "../../api/agent";
 import ExpenseCategory from "../../models/expenses/expenseCategory";
@@ -6,6 +6,7 @@ import ExpenseCategory from "../../models/expenses/expenseCategory";
 export class ExpenseStore {
   expensesRegistry = new Map<string, Expense>();
   categoriesRegistry = new Map<string, ExpenseCategory>();
+  modalOpen = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -39,10 +40,11 @@ export class ExpenseStore {
     });
   };
 
-  addExpense(expense: Expense) {
+  addExpense = (expense: Expense) => {
     agent.Expenses.post(expense).then((createdExpense) => {
       runInAction(() => {
         this.expensesRegistry.set(createdExpense.id, createdExpense);
+        this.setModalOpen(false);
       });
     });
   }
@@ -50,4 +52,8 @@ export class ExpenseStore {
   removeExpense(expenseId: string) {
     this.expensesRegistry.delete(expenseId);
   }
+
+  setModalOpen = action((open: boolean) => {
+    this.modalOpen = open;
+  });
 }
