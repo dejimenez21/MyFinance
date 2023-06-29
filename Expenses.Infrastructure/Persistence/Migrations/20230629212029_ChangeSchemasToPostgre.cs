@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Expenses.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class ChangeSchemasToPostgre : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,26 +15,14 @@ namespace Expenses.Infrastructure.Persistence.Migrations
                 name: "EXPN");
 
             migrationBuilder.CreateTable(
-                name: "Account",
-                schema: "EXPN",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Account", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ExpenseGroups",
                 schema: "EXPN",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    ExpenseAccountId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    ExpenseAccountId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,19 +30,37 @@ namespace Expenses.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentAccounts",
+                schema: "EXPN",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Method = table.Column<string>(type: "text", nullable: false),
+                    Number = table.Column<string>(type: "text", nullable: false),
+                    Currencies = table.Column<string>(type: "text", nullable: false),
+                    Bank = table.Column<string>(type: "text", nullable: true),
+                    Network = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentAccounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Expenses",
                 schema: "EXPN",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    Currency = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Category = table.Column<string>(type: "TEXT", nullable: false),
-                    AccountId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TransactionId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    GroupId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Currency = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Category = table.Column<string>(type: "text", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TransactionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,11 +91,11 @@ namespace Expenses.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Account",
+                name: "Expenses",
                 schema: "EXPN");
 
             migrationBuilder.DropTable(
-                name: "Expenses",
+                name: "PaymentAccounts",
                 schema: "EXPN");
 
             migrationBuilder.DropTable(

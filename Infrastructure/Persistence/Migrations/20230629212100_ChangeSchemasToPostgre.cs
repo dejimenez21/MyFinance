@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class SplitExpensesContext : Migration
+    public partial class ChangeSchemasToPostgre : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,15 +19,15 @@ namespace Infrastructure.Persistence.Migrations
                 schema: "TRNX",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Number = table.Column<string>(type: "TEXT", nullable: false),
-                    Currency = table.Column<string>(type: "TEXT", nullable: false),
-                    OpenedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    OpeningBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsCash = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsElegibleForPayment = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    Number = table.Column<string>(type: "text", nullable: false),
+                    Currency = table.Column<string>(type: "text", nullable: false),
+                    OpenedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OpeningBalance = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    IsCash = table.Column<bool>(type: "boolean", nullable: false),
+                    IsElegibleForPayment = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,9 +39,9 @@ namespace Infrastructure.Persistence.Migrations
                 schema: "TRNX",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    TransactionDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    TransactionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,11 +53,11 @@ namespace Infrastructure.Persistence.Migrations
                 schema: "TRNX",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AccountId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TransactionId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    Currency = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TransactionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Currency = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,8 +76,8 @@ namespace Infrastructure.Persistence.Migrations
                 schema: "TRNX",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Bank = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Bank = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,9 +96,9 @@ namespace Infrastructure.Persistence.Migrations
                 schema: "TRNX",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Bank = table.Column<string>(type: "TEXT", nullable: false),
-                    Network = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Bank = table.Column<string>(type: "text", nullable: false),
+                    Network = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
