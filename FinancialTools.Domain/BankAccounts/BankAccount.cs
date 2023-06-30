@@ -6,15 +6,15 @@ namespace FinancialTools.Domain.BankAccounts;
 
 public class BankAccount : AggregateRoot
 {
-    public string Name { get; set; }
-    public string Number { get; set; }
-    public BankCode Bank { get; set; }
-    public CurrencyCode Currency { get; set; }
-    public BankAccountType Type { get; set; }
-    public DateTime OpenedDate { get; set; }
-    public CardDetails? DebitCard { get; set; }
+    public string Name { get; private set; }
+    public string Number { get; private set; }
+    public BankCode Bank { get; private set; }
+    public CurrencyCode Currency { get; private set; }
+    public BankAccountType Type { get; private set; }
+    public DateTime OpenedDate { get; private set; }
+    public CardDetails? DebitCard { get; private set; }
 
-    public BankAccount(string name, string number, BankCode bank, CurrencyCode currency, BankAccountType type, CardDetails debitCard)
+    public BankAccount(string name, string number, BankCode bank, CurrencyCode currency, BankAccountType type)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -22,7 +22,7 @@ public class BankAccount : AggregateRoot
         Bank = bank;
         Currency = currency;
         Type = type;
-        DebitCard = debitCard;
+        DebitCard = null;
     }
 
     #region EF Core parameterless constructor
