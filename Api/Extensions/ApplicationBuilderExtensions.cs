@@ -1,4 +1,5 @@
 using Expenses.Infrastructure.Persistence;
+using FinancialTools.Infrastructure.Persistence;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ public static class ApplicationBuilderExtensions
             transactionsContext.Database.Migrate();
             var expensesContext = scope.ServiceProvider.GetRequiredService<ExpensesDbContext>();
             expensesContext.Database.Migrate();
+            var financialToolsContext = scope.ServiceProvider.GetRequiredService<FinancialToolsDbContext>();
+            financialToolsContext.Database.Migrate();
 
             if (env.IsDevelopment())
                 Seed.SeedData(transactionsContext, expensesContext);

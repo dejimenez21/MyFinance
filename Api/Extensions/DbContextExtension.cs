@@ -1,7 +1,7 @@
 ﻿using Expenses.Infrastructure.Persistence;
+using FinancialTools.Infrastructure.Persistence;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Api.Extensions;
 
@@ -14,11 +14,13 @@ public static class DbContextExtension
         {
             services.AddDbContext<ExpensesDbContext>(opt => opt.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<TransactionsDbContext>(opt => opt.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<FinancialToolsDbContext>(opt => opt.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         }
         else
         {
             services.AddDbContext<ExpensesDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<TransactionsDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<FinancialToolsDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }
