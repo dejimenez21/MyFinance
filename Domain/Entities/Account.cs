@@ -22,16 +22,15 @@ public class Account : AggregateRoot
     public AccountType Type { get; protected set; }
     public string Number { get; protected set; }
     public CurrencyCode Currency { get; protected set; }
-    public DateTime OpenedDate { get; protected set; }
-    public decimal OpeningBalance { get; private set; }
+    public DateTime? OpenedDate { get; protected set; }
+    public decimal? OpeningBalance { get; private set; }
     public bool IsCash { get; protected set; }
     public bool IsElegibleForPayment { get; protected set; }
     public IReadOnlyCollection<AccountEntry> AccountEntries => _accountEntries;
 
-    public Account(string name, AccountType type, string number, CurrencyCode currency, DateTime openedDate, decimal openingBalance, DateTime now, bool isCash = false, bool isElegibleForPayment = false)
+    public Account(string name, AccountType type, string number, CurrencyCode currency, bool isCash = false, bool isElegibleForPayment = false)
     {
-        if (OpenedDate > now) throw new Exception("Error creating account. OpenedDate can't be in the future.");
-        if (OpeningBalance < 0) throw new Exception("Error creating account. OpeningBalance can't be negative.");
+        //TODO: Change for Guard Clauses
         if (isCash && type != AccountType.Asset) throw new Exception("Error creating account. Account cannot be marked as cash if is not of type asset.");
         if (IsElegibleForPayment && (type == AccountType.Expense || type == AccountType.Income)) throw new Exception("Income and Expenses accounts cannot be mark as payment eligible.");
 
@@ -40,8 +39,6 @@ public class Account : AggregateRoot
         Type = type;
         Number = number;
         Currency = currency;
-        OpenedDate = openedDate;
-        OpeningBalance = openingBalance;
         IsCash = isCash;
         IsElegibleForPayment = isElegibleForPayment;
         _accountEntries = new HashSet<AccountEntry>();
@@ -49,6 +46,7 @@ public class Account : AggregateRoot
 
     internal void RegisterAccountMovement(Guid transactionId, Money amount)
     {
+        IsAccountOpen();
         Guard.Against.Null(amount, nameof(amount));
         Guard.Against.Zero(amount.Value, nameof(amount));
 
@@ -59,7 +57,8 @@ public class Account : AggregateRoot
 
     public Money GetBalance()
     {
-        var openingBalance = new Money(OpeningBalance, Currency);
+        IsAccountOpen();
+        var openingBalance = new Money(OpeningBalance!.Value, Currency);
 
         if (_accountEntries is null || _accountEntries.Count < 1)
             return openingBalance;
@@ -73,6 +72,18 @@ public class Account : AggregateRoot
         return balance;
     }
 
+    public void OpenAccount(decimal openingBalance, DateTime now)
+    {
+        if (openingBalance < 0 && Type != AccountType.Liability) throw new Exception("Error creating account. Only Liability type accounts can have negative opening balance.");
+        OpeningBalance = openingBalance;
+        OpenedDate = now;
+    }
+
+    //TODO: Refactor this to return a boolean and not to throw an exception.
+    private void IsAccountOpen()
+    {
+        if (!OpeningBalance.HasValue) throw new Exception("This account is not active because an opening balance hasn't been set.");
+    }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     protected Account() { }
