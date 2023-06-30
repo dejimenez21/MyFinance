@@ -7,7 +7,7 @@ namespace Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddTransactionsInfrastructure(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddTransactionsInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IAccountsRepository, AccountsRepository>();
             services.AddScoped<IBankAccountsRepository, BankAccountsRepository>();

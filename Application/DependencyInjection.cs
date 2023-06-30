@@ -6,7 +6,7 @@ namespace Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddTransactionsApplication(this IServiceCollection services)
         {
             services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListLiquidAccountsQueryHandler).Assembly));
 

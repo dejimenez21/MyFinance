@@ -1,15 +1,10 @@
 using Api.Extensions;
+using Api.Middlewares;
+using Api.Modules;
 using Domain.Services.AccountBalance;
-using Infrastructure;
-using Expenses.Infrastructure;
-using Application;
-using Expenses.Application;
+using Serilog;
 using SharedKernel.Infrastructure;
 using System.Text.Json.Serialization;
-using Serilog;
-using System.Net;
-using Api.Middlewares;
-using FinancialTools.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +25,14 @@ builder.Services.AddScoped<IDateTimes, DateTimes>();
 
 builder.Services.RegisterAllDbContexts(builder.Configuration, builder.Environment);
 
-builder.Services.AddApplication();
-builder.Services.AddExpensesApplication();
-builder.Services.AddTransactionsInfrastructure(builder.Configuration);
-builder.Services.AddExpensesInfrastructure(builder.Configuration);
-builder.Services.AddFinancialToolsInfrastructure(builder.Configuration);
+
+#region Modules Registration
+
+builder.Services.RegisterTransactionsModule();
+builder.Services.RegisterExpensesModule();
+builder.Services.RegisterFinancialToolsModule();
+
+#endregion
 
 #region DomainServices
 builder.Services.AddTransient<IAccountBalanceService, AccountBalanceCalculator>();

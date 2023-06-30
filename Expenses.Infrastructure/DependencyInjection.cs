@@ -9,7 +9,7 @@ namespace Expenses.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddExpensesInfrastructure(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddExpensesInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IExpenseGroupsRepository, ExpenseGroupsRepository>();
             services.AddScoped<IExpensesRepository, ExpensesRepository>();
