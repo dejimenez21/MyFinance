@@ -7,8 +7,8 @@ namespace Infrastructure
     public class TransactionsDbContext : ApplicationDbContext
     {
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<CreditCard> CreditCards { get; set; }
-        public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<CreditCard> TCreditCards { get; set; }
+        public DbSet<BankAccount> TBankAccounts { get; set; }
         public DbSet<AccountEntry> AccountMovements { get; set; }
 
         public TransactionsDbContext(DbContextOptions<TransactionsDbContext> options) : base(options)

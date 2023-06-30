@@ -1,8 +1,9 @@
 ﻿using SharedKernel.Domain.Enums;
+using SharedKernel.Domain.Primitives;
 
 namespace SharedKernel.Domain.ValueObjects;
 
-public record Money(decimal Value, CurrencyCode Currency)
+public record Money(decimal Value, CurrencyCode Currency) : ValueObject
 {
     public static Money operator +(Money left, Money right)
     {

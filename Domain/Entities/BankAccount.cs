@@ -1,7 +1,5 @@
 ﻿using Application.Domain.Enums;
-using Domain.Enums;
 using SharedKernel.Domain.Enums;
-using SharedKernel.Infrastructure;
 
 namespace Domain.Entities;
 

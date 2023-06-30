@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using Serilog;
 using System.Net;
 using Api.Middlewares;
+using FinancialTools.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.AddApplication();
 builder.Services.AddExpensesApplication();
 builder.Services.AddTransactionsInfrastructure(builder.Configuration);
 builder.Services.AddExpensesInfrastructure(builder.Configuration);
+builder.Services.AddFinancialToolsInfrastructure(builder.Configuration);
 
 #region DomainServices
 builder.Services.AddTransient<IAccountBalanceService, AccountBalanceCalculator>();

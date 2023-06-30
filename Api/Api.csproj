@@ -33,6 +33,9 @@
     <ProjectReference Include="..\Expenses.Application\Expenses.Application.csproj" />
     <ProjectReference Include="..\Expenses.Domain\Expenses.Domain.csproj" />
     <ProjectReference Include="..\Expenses.Infrastructure\Expenses.Infrastructure.csproj" />
+    <ProjectReference Include="..\FinancialTools.Application\FinancialTools.Application.csproj" />
+    <ProjectReference Include="..\FinancialTools.Domain\FinancialTools.Domain.csproj" />
+    <ProjectReference Include="..\FinancialTools.Infrastructure\FinancialTools.Infrastructure.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 

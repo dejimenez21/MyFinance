@@ -1,7 +1,5 @@
 ﻿using Application.Domain.Enums;
-using Domain.Enums;
 using SharedKernel.Domain.Enums;
-using SharedKernel.Infrastructure;
 
 namespace Domain.Entities
 {
@@ -9,6 +7,10 @@ namespace Domain.Entities
     {
         public BankCode Bank { get; protected set; }
         public PaymentNetwork Network { get; protected set; }
+        public decimal CreditLimit { get; set; }
+        public int StatementDay { get; set; }
+        public int PaymentDueDateOffset { get; set; }
+        public DateTime ExpirationDate { get; set; }
 
         private CreditCard()
         {

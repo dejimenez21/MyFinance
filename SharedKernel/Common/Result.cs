@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging.Abstractions;
-
-namespace SharedKernel.Common;
+﻿namespace SharedKernel.Common;
 
 public class Result
 {
