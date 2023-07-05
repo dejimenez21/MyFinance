@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinancialTools.Domain\FinancialTools.Domain.csproj" />
     <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
-    <ProjectReference Include="..\Transactions.Integration\Transactions.Integration.csproj" />
   </ItemGroup>
 
 </Project>

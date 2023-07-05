@@ -25,8 +25,8 @@ public static class Seed
 
         if (!transactionsContext.Accounts.Any())
         {
-            var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP, DateTime.Now, 1245, DateTime.Now, true, true);
-            var defaultExpenseAccount = new Account(AccountType.Expense.DefaultAccountName, AccountType.Expense, "EXP00000000004", CurrencyCode.DOP, DateTime.Now, 0, DateTime.Now);
+            var cashAccount = new Account("Cash", AccountType.Asset, "0000000001", CurrencyCode.DOP);
+            var defaultExpenseAccount = new Account(AccountType.Expense.DefaultAccountName, AccountType.Expense, "EXP00000000004", CurrencyCode.DOP);
             transactionsContext.Accounts.AddRange(new[] { cashAccount, defaultExpenseAccount });
         }
 

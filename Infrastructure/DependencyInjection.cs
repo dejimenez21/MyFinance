@@ -10,8 +10,6 @@ namespace Infrastructure
         public static IServiceCollection AddTransactionsInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IAccountsRepository, AccountsRepository>();
-            services.AddScoped<IBankAccountsRepository, BankAccountsRepository>();
-            services.AddScoped<ICreditCardsRepository, CreditCardsRepository>();
             services.AddScoped<IAccountMovementsRepository, AccountMovementsRepository>();
             services.AddScoped<ITransactionsRepository, TransactionsRepository>();
 

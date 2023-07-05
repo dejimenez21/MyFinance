@@ -28,7 +28,7 @@ public class Account : AggregateRoot
     public bool IsElegibleForPayment { get; protected set; }
     public IReadOnlyCollection<AccountEntry> AccountEntries => _accountEntries;
 
-    public Account(string name, AccountType type, string number, CurrencyCode currency, bool isCash = false, bool isElegibleForPayment = false)
+    public Account(string name, AccountType type, string number, CurrencyCode currency, bool isCash = false, bool isElegibleForPayment = true)
     {
         //TODO: Change for Guard Clauses
         if (isCash && type != AccountType.Asset) throw new Exception("Error creating account. Account cannot be marked as cash if is not of type asset.");

@@ -11,12 +11,11 @@ public class BankAccount : AggregateRoot
     public BankCode Bank { get; private set; }
     public CurrencyCode Currency { get; private set; }
     public BankAccountType Type { get; private set; }
-    public DateTime OpenedDate { get; private set; }
     public CardDetails? DebitCard { get; private set; }
 
-    public BankAccount(string name, string number, BankCode bank, CurrencyCode currency, BankAccountType type)
+    public BankAccount(Guid id, string name, string number, BankCode bank, CurrencyCode currency, BankAccountType type)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name;
         Number = number;
         Bank = bank;

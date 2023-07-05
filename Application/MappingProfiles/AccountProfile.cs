@@ -9,6 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Transactions.Integration.Commands;
 
 namespace Application.MappingProfiles
 {
@@ -29,15 +30,15 @@ namespace Application.MappingProfiles
                     config => config.MapFrom(a => a.GetBalance()));
                 
 
-            CreateMap<CreditCard, LiquidAccountDto>()
-                .ForMember(
-                    d => d.BankCode, o => o.MapFrom(s => s.Bank.ToString()))
-                .ForMember(l => l.Group, o => o.MapFrom(_ => LiquidityGroup.CREDIT_CARDS));
+            //CreateMap<CreditCard, LiquidAccountDto>()
+            //    .ForMember(
+            //        d => d.BankCode, o => o.MapFrom(s => s.Bank.ToString()))
+            //    .ForMember(l => l.Group, o => o.MapFrom(_ => LiquidityGroup.CREDIT_CARDS));
 
-            CreateMap<BankAccount, LiquidAccountDto>()
-                .ForMember(
-                    d => d.BankCode, o => o.MapFrom(s => s.Bank.ToString()))
-                .ForMember(l => l.Group, o => o.MapFrom(_ => LiquidityGroup.BANK_ACCOUNTS));
+            //CreateMap<BankAccount, LiquidAccountDto>()
+            //    .ForMember(
+            //        d => d.BankCode, o => o.MapFrom(s => s.Bank.ToString()))
+            //    .ForMember(l => l.Group, o => o.MapFrom(_ => LiquidityGroup.BANK_ACCOUNTS));
         }
 
     }

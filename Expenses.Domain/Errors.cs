@@ -18,6 +18,7 @@ public static class Errors
                 new(500, "create.transaction.failed", "An error has occured while creating transaction");
     }
 
+    //TODO: Move this error to SharedKernel
     public static class Currencies
     {
         public static Error InvalidCurrency(string invalidCurrency) =>

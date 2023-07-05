@@ -17,31 +17,36 @@ namespace Domain.Services.AccountBalance
         }
         public async Task<Money> GetAccountBalance(Guid accountId)
         {
-            var account = await _accountRepository.GetByIdAsync(accountId);
-            var movements = await _movementsRepository.GetMovementsByAccountId(accountId);
+            throw new NotImplementedException();
 
-            return movements.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual) + new Money(account.OpeningBalance, account.Currency);
+            //var account = await _accountRepository.GetByIdAsync(accountId);
+            //var movements = await _movementsRepository.GetMovementsByAccountId(accountId);
+
+            //return movements.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual) + new Money(account.OpeningBalance, account.Currency);
         }
 
         public async Task<Dictionary<Account, Money>> GetAccountsBalances(IEnumerable<Guid> accountIds)
         {
-            var movements = await _movementsRepository.GetMovementsByMultipleAccountIds(accountIds);
-            var accounts = await _accountRepository.GetByIdsAsync(accountIds.ToArray());
+            throw new NotImplementedException();
 
-            var groupedMovements = movements.GroupBy(m => accounts.Find(a => a.Id == m.Id));
+            //var movements = await _movementsRepository.GetMovementsByMultipleAccountIds(accountIds);
+            //var accounts = await _accountRepository.GetByIdsAsync(accountIds.ToArray());
 
-            var accountsBalances = accounts.ToDictionary(
-                account => account,
-                account => new Money(account.OpeningBalance, account.Currency)
-            );
+            //var groupedMovements = movements.GroupBy(m => accounts.Find(a => a.Id == m.Id));
 
-            foreach (var group in groupedMovements)
-            {
-                var balance = group.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual);
-                accountsBalances[group.Key!] += balance;
-            }
+            //var accountsBalances = accounts.ToDictionary(
+            //    account => account,
+            //    account => new Money(account.OpeningBalance, account.Currency)
+            //);
 
-            return accountsBalances;
+            //foreach (var group in groupedMovements)
+            //{
+            //    var balance = group.Select(m => m.Amount).Aggregate((prev, actual) => prev + actual);
+            //    accountsBalances[group.Key!] += balance;
+            //}
+
+            //return accountsBalances;
+
         }
     }
 }
