@@ -1,0 +1,5 @@
+Staging environment Hosting wiht IIS:
+
+Install .net hosting bundle.
+Set ApplicationPool to No Manged Code.
+Set environment in web.config file
