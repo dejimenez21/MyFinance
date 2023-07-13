@@ -36,6 +36,7 @@ public class ExpenseCategory : Enumeration
     public static readonly ExpenseCategory Pets = new("Pets", "Pets");
     public static readonly ExpenseCategory Miscellaneous = new("Miscellaneous", "Miscellaneous");
 
+    //TODO: Refactor this method to use reflection or the base class method that is built for listing all possible values of a specific Enumeration type.
     public static IEnumerable<ExpenseCategory> List() =>
         new[] {
             FoodAndGroceries,
